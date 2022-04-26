@@ -1,6 +1,7 @@
 package net.chargerevolutionapp;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,6 +15,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -31,9 +39,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     EditText passwordAgainEditText;
     EditText phoneEditText;
     EditText addressEditText;
-
     RadioGroup accountTypeGroup;
 
+    private FirebaseAuth mAuth;
 
     Spinner spinner;
 
@@ -44,23 +52,17 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         Log.i(LOG_TAG, "onCreate()");
 
+        mAuth = FirebaseAuth.getInstance();
 
-        //Bundle bundle = getIntent().getExtras();
-        //bundle.get("SECRET_KEY");
-        int secret_key = getIntent().getIntExtra("SECRET_KEY", 0);
-
-        if (secret_key != 99) {
-            finish();
-        }
         userNameEditText = findViewById(R.id.userNameEditText);
         userEmailEditText = findViewById(R.id.userEmailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         passwordAgainEditText = findViewById(R.id.passwordAgainEditText);
         phoneEditText = findViewById(R.id.phoneEditText);
         spinner = findViewById(R.id.phoneSpinner);
-        addressEditText = findViewById(R.id.addressEditText);
+      /*  addressEditText = findViewById(R.id.addressEditText);
         accountTypeGroup = findViewById(R.id.accountTypeGroup);
-        accountTypeGroup.check(R.id.buyerRadioButton);
+        accountTypeGroup.check(R.id.buyerRadioButton);*/
 
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
         String userName = preferences.getString("userName", "");
@@ -71,13 +73,12 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         passwordAgainEditText.setText(password);
 
         spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.phone_modes, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.phone_modes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
         Log.i(LOG_TAG, "onCreate");
-
-
 
     }
 
@@ -90,24 +91,37 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         if (!password.equals(passwordAgain)) {
             Log.i(LOG_TAG, "Nem egyezik a jelszó!");
             return;
-
         }
 
-        String phoneNumber =  phoneEditText.getText().toString();
+/*
+        String phoneNumber = phoneEditText.getText().toString();
         String phoneType = spinner.getSelectedItem().toString();
         String address = addressEditText.getText().toString();
+*/
 
-        int checkedId = accountTypeGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = accountTypeGroup.findViewById(checkedId);
-        String accountType = radioButton.getText().toString();
+   //     int checkedId = accountTypeGroup.getCheckedRadioButtonId();
+    //    RadioButton radioButton = accountTypeGroup.findViewById(checkedId);
+      //  String accountType = radioButton.getText().toString();
+/*
 
         Log.i(LOG_TAG, address);
+*/
 
 
         Log.i(LOG_TAG, "Regisztrált: " + userName + ", email: " + email);
         //TODO
-
-        startShopping();
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Log.d(LOG_TAG, "User created successfully");
+                    startShopping();
+                } else {
+                    Log.d(LOG_TAG, "User was't created successfully:", task.getException());
+                    Toast.makeText(RegistrationActivity.this, "User was't created successfully:", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
 
@@ -115,9 +129,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         finish();
     }
 
-    private void startShopping(/*Registered user data*/){
+    private void startShopping(/*Registered user data*/) {
         Intent intent = new Intent(this, ShopListActivity.class);
-        intent.putExtra("SECRET_KEY", SECRET_KEY);
+        //intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
 
     }
