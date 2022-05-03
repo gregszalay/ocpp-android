@@ -25,7 +25,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="GOOGLE_MAPS_API_KEY" />
 
-       <!-- <meta-data
+        <!-- <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />-->
 
@@ -34,15 +34,13 @@
             android:exported="false"
             android:label="@string/title_activity_charger_map" />
         <activity
-            android:name=".ShopListActivity"
-            android:exported="false" />
+            android:name=".ChargingStationListActivity"
+            android:exported="false"
+            android:label="ChargingStationListActivity" />
         <activity
             android:name=".RegistrationActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

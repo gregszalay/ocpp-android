@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -130,7 +129,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void startShopping(/*Registered user data*/) {
-        Intent intent = new Intent(this, ShopListActivity.class);
+        Intent intent = new Intent(this, ChargingStationListActivity.class);
         //intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
 

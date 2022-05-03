@@ -29,4 +29,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_charger_map">ChargerMapActivity</string>
+    <string name="item_info_placeholder">Item Info</string>
+    <string name="item_placeholder">Item PlaceHolder</string>
+    <string name="account_type">VmilyenAccount</string>
+    <string name="customer">VmilyenCustomer</string>
 </resources>

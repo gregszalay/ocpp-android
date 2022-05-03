@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="default_margin">10dp</dimen>
+    <dimen name="register_margin_top">10</dimen>
+    <dimen name="default_margin_side">10</dimen>
 </resources>
