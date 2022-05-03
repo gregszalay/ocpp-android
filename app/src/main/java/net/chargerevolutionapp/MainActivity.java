@@ -150,7 +150,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void goShopping(){
-        Intent intent = new Intent(this, ShopListActivity.class);
+        /*Intent intent = new Intent(this, ShopListActivity.class);
+        startActivity(intent);*/
+        Intent intent = new Intent(this, ChargerMapActivity.class);
         startActivity(intent);
     }
 
