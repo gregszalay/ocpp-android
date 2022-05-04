@@ -134,10 +134,10 @@ public class ChargingStationAdapter
 
             itemView.findViewById(R.id.chargerDetailsBtn).setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, ChargingStationDetailsActivity.class);
-                intent.putExtra("ItemName", R.id.itemName);
-                intent.putExtra("Address", R.id.address);
-                intent.putExtra("Connectors", R.id.connectors);
-                intent.putExtra("MaxPower", R.id.maxPower);
+                intent.putExtra("ItemName", mItemName.getText());
+                intent.putExtra("Address", mAddress.getText());
+                intent.putExtra("Connectors", mConnectors.getText());
+                intent.putExtra("MaxPower", mMaxPower.getText());
                 mContext.startActivity(intent);
                 //((ChargingStationListActivity) mContext).updateAlertIcon();
             });

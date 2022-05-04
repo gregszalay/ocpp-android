@@ -14,7 +14,8 @@
         android:layout_marginTop="10dp"
         android:text="ItemNamePlaceholder"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="?android:textColorSecondary"/>
 
 
     <ImageView
@@ -32,7 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/chargerImage"
         android:padding="8dp"
-        android:text="addressPlaceholder" />
+        android:text="addressPlaceholder"
+        android:textColor="?android:textColorSecondary"/>
 
 
     <TextView
@@ -42,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/detailsAddress"
         android:padding="8dp"
-        android:text="connectorsPlaceholder" />
+        android:text="connectorsPlaceholder"
+        android:textColor="?android:textColorSecondary"/>
 
 
     <TextView
@@ -52,7 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/detailsConnectors"
         android:padding="8dp"
-        android:text="maxPowerPlaceholder" />
+        android:text="maxPowerPlaceholder"
+        android:textColor="?android:textColorSecondary"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"

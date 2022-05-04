@@ -3,6 +3,7 @@ package net.chargerevolutionapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,6 +31,9 @@ public class ChargingStationDetailsActivity extends AppCompatActivity {
         detailsAddress.setText(bundle.getString("Address"));
         detailsConnectors.setText(bundle.getString("Connectors"));
         detailsMaxPower.setText(bundle.getString("MaxPower"));
+
+        Log.i("details", "ItemName");
+        Log.i("details", bundle.getString("ItemName"));
 
 
 
