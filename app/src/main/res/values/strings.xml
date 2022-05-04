@@ -45,4 +45,7 @@
     <string name="editProfileBtnText">Profil szerkesztése</string>
     <string name="openChargingStationListBtnText">Töltők listája</string>
     <string name="homeTitleText">Menü</string>
+    <string name="title_activity_qrcode_scanner">QRCodeScannerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

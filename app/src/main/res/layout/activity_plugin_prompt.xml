@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChargingActivity">
+    tools:context=".PluginPromptActivity">
 
 
     <LinearLayout
@@ -19,51 +19,39 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/chargingSessionTitle"
+            android:id="@+id/chargerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sessionInProgressTitle"
+            android:text="chargerNamePlaceholder"
             android:textAlignment="center"
             android:textColor="?android:textColorSecondary"
             android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/sessionChargerName"
-            style="@style/ItemDetailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="chargerNamePlaceholder"
-            android:textColor="?android:textColorSecondary" />
 
         <TextView
-            android:id="@+id/chargingPower"
+            android:id="@+id/cablePlugPromptText"
             style="@style/ItemDetailText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:padding="8dp"
-            android:text="chargingPowerPlaceholder"
+            android:text="Kérem csatlakoztassa a kábelt!"
             android:textColor="?android:textColorSecondary" />
 
-        <TextView
-            android:id="@+id/approxTimeToFull"
-            style="@style/ItemDetailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="approxTimeToFullPlaceholder"
-            android:textColor="?android:textColorSecondary" />
 
         <Button
             android:layout_width="300dp"
             android:layout_height="match_parent"
-            android:layout_below="@id/approxTimeToFull"
-            android:onClick="endChargingSession"
-            android:text="Töltés befejezése" />
+            android:onClick="cablePluggedInOK"
+            android:text="OK" />
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:onClick="cancelChargingSession"
+            android:text="Mégsem" />
     </LinearLayout>
 
 
-
-
 </RelativeLayout>
-

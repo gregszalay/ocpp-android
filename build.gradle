@@ -1,22 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 buildscript {
-  repositories {
-    // Check that you have the following line (if not, add it):
-    google()  // Google's Maven repository
+    repositories {
+        // Check that you have the following line (if not, add it):
+       // google()  // Google's Maven repository
+        maven { url 'https://jitpack.io' }
+        jcenter() // Warning: this repository is going to shut down soon
 
-  }
-  dependencies {
+    }
+    dependencies {
 
-    // Add this line
-    classpath 'com.google.gms:google-services:4.3.10'
+        // Add this line
+        classpath 'com.google.gms:google-services:4.3.10'
 
-  }
+    }
 }
+
+
+
 plugins {
     id 'com.android.application' version '7.1.2' apply false
     id 'com.android.library' version '7.1.2' apply false
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.0' apply false
 }
+
 
 
 task clean(type: Delete) {

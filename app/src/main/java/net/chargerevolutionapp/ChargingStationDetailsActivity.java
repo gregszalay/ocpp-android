@@ -9,12 +9,23 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+
 public class ChargingStationDetailsActivity extends AppCompatActivity {
 
     private TextView detailsItemName;
     private TextView detailsAddress;
     private TextView detailsConnectors;
     private TextView detailsMaxPower;
+
+    private ChargingStation mCharger;
+
+    private FirebaseFirestore mFirestore;
+    private CollectionReference mItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +39,29 @@ public class ChargingStationDetailsActivity extends AppCompatActivity {
         detailsMaxPower = findViewById(R.id.detailsMaxPower);
 
         Bundle bundle = getIntent().getExtras();
+        detailsItemName.setText(bundle.getString("ChargerName"));
 
-        detailsItemName.setText(bundle.getString("ItemName"));
-        detailsAddress.setText(bundle.getString("Address"));
-        detailsConnectors.setText(bundle.getString("Connectors"));
-        detailsMaxPower.setText(bundle.getString("MaxPower"));
+        Log.i("details", "ChargerName");
+        Log.i("details", bundle.getString("ChargerName"));
 
-        Log.i("details", "ItemName");
-        Log.i("details", bundle.getString("ItemName"));
+        mFirestore = FirebaseFirestore.getInstance();
+        mItems = mFirestore.collection("chargingStations");
+        mItems.whereEqualTo("name", "RevolutionCharger1").limit(1).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                Log.i("details", "entered for()");
+                mCharger = document.toObject(ChargingStation.class);
+                detailsAddress.setText(mCharger.getAddress());
+                detailsConnectors.setText(mCharger.getConnectorTypes());
+                detailsMaxPower.setText(String.valueOf(mCharger.getMaxPowerInkW()));
+            }
+        });
 
 
     }
 
     public void startCharging(View view) {
-        Intent intent = new Intent(this, ChargingActivity.class);
+        Intent intent = new Intent(this, PluginPromptActivity.class);
+        intent.putExtra("ChargerName", this.mCharger.getName());
         startActivity(intent);
     }
 
@@ -49,6 +69,7 @@ public class ChargingStationDetailsActivity extends AppCompatActivity {
         Toast.makeText(ChargingStationDetailsActivity.this, "Charger reserved until 10:35!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-
     }
+
+
 }

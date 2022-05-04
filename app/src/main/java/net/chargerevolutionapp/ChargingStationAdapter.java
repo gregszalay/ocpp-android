@@ -2,6 +2,7 @@ package net.chargerevolutionapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,9 +121,6 @@ public class ChargingStationAdapter
         private TextView mConnectors;
         private TextView mMaxPower;
 
-        private Context mkContext;
-
-
         ViewHolder(View itemView) {
             super(itemView);
 
@@ -134,10 +132,10 @@ public class ChargingStationAdapter
 
             itemView.findViewById(R.id.chargerDetailsBtn).setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, ChargingStationDetailsActivity.class);
-                intent.putExtra("ItemName", mItemName.getText());
-                intent.putExtra("Address", mAddress.getText());
-                intent.putExtra("Connectors", mConnectors.getText());
-                intent.putExtra("MaxPower", mMaxPower.getText());
+                Log.i("details", "ChargerName");
+                Log.i("details", mItemName.getText().toString());
+                intent.putExtra("ChargerName", mItemName.getText().toString());
+
                 mContext.startActivity(intent);
                 //((ChargingStationListActivity) mContext).updateAlertIcon();
             });
@@ -148,6 +146,8 @@ public class ChargingStationAdapter
             mAddress.setText(currentItem.getAddress());
             mConnectors.setText(currentItem.getConnectorTypes());
             mMaxPower.setText(String.valueOf(currentItem.getMaxPowerInkW()));
+
+
 
             //mPriceText.setText(currentItem.getMaxPowerInkW());
             //mRatingBar.setRating(currentItem.getRatedInfo());
