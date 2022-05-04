@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ChargingStationDetailsActivity">
+
+    <TextView
+        android:id="@+id/detailsItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:text="ItemNamePlaceholder"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+
+    <ImageView
+        android:id="@+id/chargerImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/detailsItemName"
+        android:adjustViewBounds="true" />
+
+
+    <TextView
+        android:id="@+id/detailsAddress"
+        style="@style/ItemDetailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chargerImage"
+        android:padding="8dp"
+        android:text="addressPlaceholder" />
+
+
+    <TextView
+        android:id="@+id/detailsConnectors"
+        style="@style/ItemDetailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detailsAddress"
+        android:padding="8dp"
+        android:text="connectorsPlaceholder" />
+
+
+    <TextView
+        android:id="@+id/detailsMaxPower"
+        style="@style/ItemDetailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detailsConnectors"
+        android:padding="8dp"
+        android:text="maxPowerPlaceholder" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detailsMaxPower"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:onClick="startCharging"
+            android:text="@string/startChargingBtnText" />
+
+        <Button
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:onClick="reserveNow"
+            android:text="@string/reserveNowBtnText" />
+    </LinearLayout>
+</RelativeLayout>

@@ -33,4 +33,11 @@
     <string name="item_placeholder">Item PlaceHolder</string>
     <string name="account_type">VmilyenAccount</string>
     <string name="customer">VmilyenCustomer</string>
+    <string name="startChargingBtnText">Töltök most</string>
+    <string name="reserveNowBtnText">Lefoglalom 30 percre</string>
+    <string name="chargerDetialsBtnText">Megnézem</string>
+    <string name="maxPowerPlaceholder">maxPowerPlaceholder</string>
+    <string name="connectorsPlaceholder">connectorsPlaceholder</string>
+    <string name="addressPlaceholder">addressPlaceholder</string>
+    <string name="ItemNamePlaceholder">ItemNamePlaceholder</string>
 </resources>

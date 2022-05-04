@@ -1,6 +1,7 @@
 package net.chargerevolutionapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -48,7 +50,7 @@ public class ChargingStationAdapter
         holder.bindTo(currentItem);
 
 
-        if(holder.getAdapterPosition() > lastPosition) {
+        if (holder.getAdapterPosition() > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
             holder.itemView.startAnimation(animation);
             lastPosition = holder.getAdapterPosition();
@@ -57,13 +59,14 @@ public class ChargingStationAdapter
 
     @Override
     public int getItemCount() {
-        return mChargingStationData.size();
+        if (mChargingStationData != null) return mChargingStationData.size();
+        else return 0;
     }
 
 
     /**
      * RecycleView filter
-     * **/
+     **/
     @Override
     public Filter getFilter() {
         return shoppingFilter;
@@ -75,18 +78,28 @@ public class ChargingStationAdapter
             ArrayList<ChargingStation> filteredList = new ArrayList<>();
             FilterResults results = new FilterResults();
 
-            if(charSequence == null || charSequence.length() == 0) {
-                results.count = mChargingStationDataAll.size();
+            if (charSequence == null || charSequence.length() == 0) {
+                if(mChargingStationDataAll != null){
+                    results.count = mChargingStationDataAll.size();
+                } else {
+                    results.count = 0;
+                }
+
                 results.values = mChargingStationDataAll;
             } else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
-                for(ChargingStation item : mChargingStationDataAll) {
-                    if(item.getName().toLowerCase().contains(filterPattern)){
+                for (ChargingStation item : mChargingStationDataAll) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
 
-                results.count = filteredList.size();
+                if(filteredList != null){
+                    results.count = filteredList.size();
+                } else {
+                    results.count = 0;
+                }
+
                 results.values = filteredList;
             }
 
@@ -95,36 +108,48 @@ public class ChargingStationAdapter
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            mChargingStationData = (ArrayList)filterResults.values;
+            mChargingStationData = (ArrayList) filterResults.values;
             notifyDataSetChanged();
         }
     };
 
     class ViewHolder extends RecyclerView.ViewHolder {
         // Member Variables for the TextViews
-        private TextView mTitleText;
-        private TextView mInfoText;
-        private TextView mPriceText;
-        private ImageView mItemImage;
-        private RatingBar mRatingBar;
+        private TextView mItemName;
+        private TextView mAddress;
+        private TextView mConnectors;
+        private TextView mMaxPower;
+
+        private Context mkContext;
+
 
         ViewHolder(View itemView) {
             super(itemView);
 
             // Initialize the views.
-            mTitleText = itemView.findViewById(R.id.itemTitle);
-            mInfoText = itemView.findViewById(R.id.subTitle);
-            mItemImage = itemView.findViewById(R.id.itemImage);
-            mRatingBar = itemView.findViewById(R.id.ratingBar);
-            mPriceText = itemView.findViewById(R.id.price);
+            mItemName = itemView.findViewById(R.id.itemName);
+            mAddress = itemView.findViewById(R.id.address);
+            mConnectors = itemView.findViewById(R.id.connectors);
+            mMaxPower = itemView.findViewById(R.id.maxPower);
 
-            itemView.findViewById(R.id.add_to_cart).setOnClickListener(view -> ((ChargingStationListActivity)mContext).updateAlertIcon());
+            itemView.findViewById(R.id.chargerDetailsBtn).setOnClickListener(view -> {
+                Intent intent = new Intent(mContext, ChargingStationDetailsActivity.class);
+                intent.putExtra("ItemName", R.id.itemName);
+                intent.putExtra("Address", R.id.address);
+                intent.putExtra("Connectors", R.id.connectors);
+                intent.putExtra("MaxPower", R.id.maxPower);
+                mContext.startActivity(intent);
+                //((ChargingStationListActivity) mContext).updateAlertIcon();
+            });
         }
 
-        void bindTo(ChargingStation currentItem){
-            mTitleText.setText(currentItem.getName());
-            mInfoText.setText(currentItem.getConnectorTypes());
-            mPriceText.setText(currentItem.getMaxPowerInkW());
+        void bindTo(ChargingStation currentItem) {
+            mItemName.setText(currentItem.getName());
+            mAddress.setText(currentItem.getAddress());
+            mConnectors.setText(currentItem.getConnectorTypes());
+            mMaxPower.setText(String.valueOf(currentItem.getMaxPowerInkW()));
+
+            //mPriceText.setText(currentItem.getMaxPowerInkW());
             //mRatingBar.setRating(currentItem.getRatedInfo());
 
             // Load the images into the ImageView using the Glide library.
