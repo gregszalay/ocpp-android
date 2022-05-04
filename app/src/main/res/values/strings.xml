@@ -40,4 +40,9 @@
     <string name="connectorsPlaceholder">connectorsPlaceholder</string>
     <string name="addressPlaceholder">addressPlaceholder</string>
     <string name="ItemNamePlaceholder">ItemNamePlaceholder</string>
+    <string name="sessionInProgressTitle">Töltés folyamatban...</string>
+    <string name="scanQRCodeBtnText">QR kód olvasás</string>
+    <string name="editProfileBtnText">Profil szerkesztése</string>
+    <string name="openChargingStationListBtnText">Töltők listája</string>
+    <string name="homeTitleText">Menü</string>
 </resources>

@@ -2,10 +2,12 @@ package net.chargerevolutionapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ChargingStationDetailsActivity extends AppCompatActivity {
 
@@ -36,12 +38,17 @@ public class ChargingStationDetailsActivity extends AppCompatActivity {
         Log.i("details", bundle.getString("ItemName"));
 
 
-
     }
 
     public void startCharging(View view) {
+        Intent intent = new Intent(this, ChargingActivity.class);
+        startActivity(intent);
     }
 
     public void reserveNow(View view) {
+        Toast.makeText(ChargingStationDetailsActivity.this, "Charger reserved until 10:35!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChargingActivity">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/chargingSessionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sessionInProgressTitle"
+            android:textAlignment="center"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/chargingPower"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chargingSessionTitle"
+            android:padding="8dp"
+            android:text="chargingPowerPlaceholder"
+            android:textColor="?android:textColorSecondary" />
+
+        <TextView
+            android:id="@+id/approxTimeToFull"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chargingPower"
+            android:padding="8dp"
+            android:text="approxTimeToFullPlaceholder"
+            android:textColor="?android:textColorSecondary" />
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/approxTimeToFull"
+            android:onClick="endChargingSession"
+            android:text="Töltés befejezése" />
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
+

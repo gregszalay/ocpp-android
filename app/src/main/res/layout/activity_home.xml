@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/homeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/homeTitleText"
+            android:textAlignment="center"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/openChargingStationListBtn"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:onClick="openChargingStationList"
+            android:text="@string/openChargingStationListBtnText" />
+
+        <Button
+            android:id="@+id/scanQRCodeBtn"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:onClick="scanQRCode"
+            android:text="@string/scanQRCodeBtnText" />
+
+        <Button
+            android:id="@+id/editProfileBtn"
+            android:layout_width="300dp"
+            android:layout_marginTop="100dp"
+            android:layout_height="match_parent"
+            android:onClick="editProfile"
+            android:text="@string/editProfileBtnText" />
+    </LinearLayout>
+
+</RelativeLayout>
