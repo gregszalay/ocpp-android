@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chargerevolutionapp">
         <activity
+            android:name=".ProfileSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".PluginPromptActivity"
             android:exported="false" />
         <activity

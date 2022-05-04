@@ -35,13 +35,15 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void editProfile(View view) {
+        Intent intent = new Intent(this, ProfileSettingsActivity.class);
+        startActivity(intent);
     }
 
     void checkUserPermissionAndOpenCamera() {
         Log.i(LOG_TAG, "entered checkUserPermissionAndOpenCamera() method");
         if (Build.VERSION.SDK_INT >= 23) {
-                Log.i(LOG_TAG, "calling checkSelfPermission");
-            if(ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            Log.i(LOG_TAG, "calling checkSelfPermission");
+            if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 Log.i(LOG_TAG, "calling requestPermissions");
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
                 return;
@@ -52,12 +54,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startQRScanner();
                 } else {
                     Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
@@ -67,11 +68,11 @@ public class HomeActivity extends AppCompatActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-    private void startQRScanner(){
+
+    private void startQRScanner() {
         Intent intent = new Intent(this, QRCodeScannerActivity.class);
         startActivity(intent);
     }
-
 
 
 }
