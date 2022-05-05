@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void openChargingStationList(View view) {
         Intent intent = new Intent(this, ChargingStationListActivity.class);
+        Log.i(LOG_TAG, "starting activity: ChargingStationListActivity.class");
         startActivity(intent);
     }
 

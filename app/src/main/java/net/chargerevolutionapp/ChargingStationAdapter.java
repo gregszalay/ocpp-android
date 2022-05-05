@@ -38,8 +38,10 @@ public class ChargingStationAdapter
     @Override
     public ChargingStationAdapter.ViewHolder onCreateViewHolder(
             ViewGroup parent, int viewType) {
+
         return new ViewHolder(LayoutInflater.from(mContext)
                 .inflate(R.layout.list_item, parent, false));
+
     }
 
     @Override
