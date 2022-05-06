@@ -1,22 +1,16 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.chargers;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -33,8 +27,11 @@ import java.util.ArrayList;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class ChargingStationListActivity extends AppCompatActivity {
-    private static final String LOG_TAG = ChargingStationListActivity.class.getName();
+import net.chargerevolutionapp.R;
+import net.chargerevolutionapp.profiles.UserProfile;
+
+public class ChargerListActivity extends AppCompatActivity {
+    private static final String LOG_TAG = ChargerListActivity.class.getName();
     private FirebaseUser user;
 
     private FrameLayout redCircle;
@@ -45,8 +42,8 @@ public class ChargingStationListActivity extends AppCompatActivity {
 
     // Member variables.
     private RecyclerView mRecyclerView;
-    private ArrayList<ChargingStation> mItemsData;
-    private ChargingStationAdapter mAdapter;
+    private ArrayList<Charger> mItemsData;
+    private ChargerAdapter mAdapter;
     private ArrayList<UserProfile> mProfileItemsData = new ArrayList<>();
 
     private CollectionReference profilesCollectionRef;
@@ -86,7 +83,7 @@ public class ChargingStationListActivity extends AppCompatActivity {
         // Initialize the ArrayList that will contain the data.
         mItemsData = new ArrayList<>();
         // Initialize the adapter and set it to the RecyclerView.
-        mAdapter = new ChargingStationAdapter(this, mItemsData);
+        mAdapter = new ChargerAdapter(this, mItemsData);
         mRecyclerView.setAdapter(mAdapter);
 
         mFirestore = FirebaseFirestore.getInstance();
@@ -110,7 +107,7 @@ public class ChargingStationListActivity extends AppCompatActivity {
 
                 mItems.orderBy("name").limit(100).get().addOnSuccessListener(queryDocumentSnapshots2 -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots2) {
-                        ChargingStation item = document.toObject(ChargingStation.class);
+                        Charger item = document.toObject(Charger.class);
                         //Filter based on user EV profile
                         if (item.getConnectorTypes().contains(this.mProfileItemsData.get(0).getCarConnector())) {
                             mItemsData.add(item);

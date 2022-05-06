@@ -1,6 +1,6 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.chargers;
 
-public class ChargingStation {
+public class Charger {
 
     private String address;
     private long chargingStartTime;
@@ -14,8 +14,8 @@ public class ChargingStation {
     private long reservedUntil;
     private int maxPowerInkW;
 
-    public ChargingStation(String address, long chargingStartTime, long chargingStopTime, String connectorTypes, String country, boolean isCharging, String name, String postCode,
-                           boolean reserved, long reservedUntil, int maxPowerInkW) {
+    public Charger(String address, long chargingStartTime, long chargingStopTime, String connectorTypes, String country, boolean isCharging, String name, String postCode,
+                   boolean reserved, long reservedUntil, int maxPowerInkW) {
         this.address = address;
         this.chargingStartTime = chargingStartTime;
         this.chargingStopTime = chargingStopTime;
@@ -29,7 +29,7 @@ public class ChargingStation {
         this.maxPowerInkW = maxPowerInkW;
     }
 
-    public ChargingStation() {}
+    public Charger() {}
 
     public int getMaxPowerInkW() {
         return maxPowerInkW;

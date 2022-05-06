@@ -1,4 +1,4 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.chargers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,33 +10,31 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import net.chargerevolutionapp.R;
 
 import java.util.ArrayList;
 
-public class ChargingStationAdapter
-        extends RecyclerView.Adapter<ChargingStationAdapter.ViewHolder>
+public class ChargerAdapter
+        extends RecyclerView.Adapter<ChargerAdapter.ViewHolder>
         implements Filterable {
     // Member variables.
-    private ArrayList<ChargingStation> mChargingStationData;
-    private ArrayList<ChargingStation> mChargingStationDataAll;
+    private ArrayList<Charger> mChargerData;
+    private ArrayList<Charger> mChargerDataAll;
     private Context mContext;
     private int lastPosition = -1;
 
-    ChargingStationAdapter(Context context, ArrayList<ChargingStation> itemsData) {
-        this.mChargingStationData = itemsData;
-        this.mChargingStationDataAll = itemsData;
+    ChargerAdapter(Context context, ArrayList<Charger> itemsData) {
+        this.mChargerData = itemsData;
+        this.mChargerDataAll = itemsData;
         this.mContext = context;
     }
 
     @Override
-    public ChargingStationAdapter.ViewHolder onCreateViewHolder(
+    public ChargerAdapter.ViewHolder onCreateViewHolder(
             ViewGroup parent, int viewType) {
 
         return new ViewHolder(LayoutInflater.from(mContext)
@@ -45,9 +43,9 @@ public class ChargingStationAdapter
     }
 
     @Override
-    public void onBindViewHolder(ChargingStationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ChargerAdapter.ViewHolder holder, int position) {
         // Get current sport.
-        ChargingStation currentItem = mChargingStationData.get(position);
+        Charger currentItem = mChargerData.get(position);
 
         // Populate the textviews with data.
         holder.bindTo(currentItem);
@@ -62,7 +60,7 @@ public class ChargingStationAdapter
 
     @Override
     public int getItemCount() {
-        if (mChargingStationData != null) return mChargingStationData.size();
+        if (mChargerData != null) return mChargerData.size();
         else return 0;
     }
 
@@ -78,20 +76,20 @@ public class ChargingStationAdapter
     private Filter shoppingFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<ChargingStation> filteredList = new ArrayList<>();
+            ArrayList<Charger> filteredList = new ArrayList<>();
             FilterResults results = new FilterResults();
 
             if (charSequence == null || charSequence.length() == 0) {
-                if(mChargingStationDataAll != null){
-                    results.count = mChargingStationDataAll.size();
+                if(mChargerDataAll != null){
+                    results.count = mChargerDataAll.size();
                 } else {
                     results.count = 0;
                 }
 
-                results.values = mChargingStationDataAll;
+                results.values = mChargerDataAll;
             } else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
-                for (ChargingStation item : mChargingStationDataAll) {
+                for (Charger item : mChargerDataAll) {
                     if (item.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
@@ -111,7 +109,7 @@ public class ChargingStationAdapter
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            mChargingStationData = (ArrayList) filterResults.values;
+            mChargerData = (ArrayList) filterResults.values;
             notifyDataSetChanged();
         }
     };
@@ -133,7 +131,7 @@ public class ChargingStationAdapter
             mMaxPower = itemView.findViewById(R.id.maxPower);
 
             itemView.findViewById(R.id.chargerDetailsBtn).setOnClickListener(view -> {
-                Intent intent = new Intent(mContext, ChargingStationDetailsActivity.class);
+                Intent intent = new Intent(mContext, ChargerDetailsActivity.class);
                 Log.i("details", "ChargerName");
                 Log.i("details", mItemName.getText().toString());
                 intent.putExtra("ChargerName", mItemName.getText().toString());
@@ -143,7 +141,7 @@ public class ChargingStationAdapter
             });
         }
 
-        void bindTo(ChargingStation currentItem) {
+        void bindTo(Charger currentItem) {
             mItemName.setText(currentItem.getName());
             mAddress.setText(currentItem.getAddress());
             mConnectors.setText(currentItem.getConnectorTypes());

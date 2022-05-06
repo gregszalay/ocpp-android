@@ -12,6 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import net.chargerevolutionapp.chargers.ChargerListActivity;
+import net.chargerevolutionapp.charging.QRCodeScannerActivity;
+import net.chargerevolutionapp.profiles.ProfileSettingsActivity;
+
 public class HomeActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = HomeActivity.class.getName();
@@ -25,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openChargingStationList(View view) {
-        Intent intent = new Intent(this, ChargingStationListActivity.class);
+        Intent intent = new Intent(this, ChargerListActivity.class);
         Log.i(LOG_TAG, "starting activity: ChargingStationListActivity.class");
         startActivity(intent);
     }

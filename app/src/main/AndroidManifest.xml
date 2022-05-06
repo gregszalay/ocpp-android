@@ -17,13 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chargerevolutionapp">
         <activity
-            android:name=".ProfileSettingsActivity"
+            android:name=".profiles.ProfileSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".PluginPromptActivity"
+            android:name=".charging.PluginPromptActivity"
             android:exported="false" />
         <activity
-            android:name=".QRCodeScannerActivity"
+            android:name=".charging.QRCodeScannerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_qrcode_scanner"
@@ -32,10 +32,10 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ChargingActivity"
+            android:name=".charging.ChargingActivity"
             android:exported="false" />
         <activity
-            android:name=".ChargingStationDetailsActivity"
+            android:name=".chargers.ChargerDetailsActivity"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -59,18 +59,14 @@
            android:value="@integer/google_play_services_version" />
         -->
         <activity
-            android:name=".ChargerMapActivity"
-            android:exported="false"
-            android:label="@string/title_activity_charger_map" />
-        <activity
-            android:name=".ChargingStationListActivity"
+            android:name=".chargers.ChargerListActivity"
             android:exported="false"
             android:label="ChargingStationListActivity" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".users.RegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".users.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

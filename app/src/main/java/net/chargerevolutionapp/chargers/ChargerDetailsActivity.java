@@ -1,4 +1,4 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.chargers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,16 +13,18 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.ArrayList;
+import net.chargerevolutionapp.HomeActivity;
+import net.chargerevolutionapp.charging.PluginPromptActivity;
+import net.chargerevolutionapp.R;
 
-public class ChargingStationDetailsActivity extends AppCompatActivity {
+public class ChargerDetailsActivity extends AppCompatActivity {
 
     private TextView detailsItemName;
     private TextView detailsAddress;
     private TextView detailsConnectors;
     private TextView detailsMaxPower;
 
-    private ChargingStation mCharger;
+    private Charger mCharger;
 
     private FirebaseFirestore mFirestore;
     private CollectionReference mItems;
@@ -49,7 +51,7 @@ public class ChargingStationDetailsActivity extends AppCompatActivity {
         mItems.whereEqualTo("name", "RevolutionCharger1").limit(1).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 Log.i("details", "entered for()");
-                mCharger = document.toObject(ChargingStation.class);
+                mCharger = document.toObject(Charger.class);
                 detailsAddress.setText(mCharger.getAddress());
                 detailsConnectors.setText(mCharger.getConnectorTypes());
                 detailsMaxPower.setText(String.valueOf(mCharger.getMaxPowerInkW()));
@@ -66,7 +68,7 @@ public class ChargingStationDetailsActivity extends AppCompatActivity {
     }
 
     public void reserveNow(View view) {
-        Toast.makeText(ChargingStationDetailsActivity.this, "Charger reserved until 10:35!", Toast.LENGTH_LONG).show();
+        Toast.makeText(ChargerDetailsActivity.this, "Charger reserved until 10:35!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }

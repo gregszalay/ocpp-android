@@ -1,4 +1,4 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.users;
 
 
 import androidx.activity.result.ActivityResult;
@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,9 +28,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String LOG_TAG = MainActivity.class.getName();
-    private static final String PREF_KEY = MainActivity.class.getPackage().toString();
+import net.chargerevolutionapp.HomeActivity;
+import net.chargerevolutionapp.R;
+
+public class LoginActivity extends AppCompatActivity {
+    private static final String LOG_TAG = LoginActivity.class.getName();
+    private static final String PREF_KEY = LoginActivity.class.getPackage().toString();
     private static final int SECRET_KEY = 99;
     private static final int RC_SIGN_IN = 123;
 
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, "Login done!");
                     goShopping();
                 } else {
-                    Toast.makeText(MainActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
                 }
             }
         });

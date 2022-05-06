@@ -1,4 +1,4 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.users;
 
 
 import androidx.annotation.NonNull;
@@ -21,6 +21,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import net.chargerevolutionapp.R;
+import net.chargerevolutionapp.chargers.ChargerListActivity;
 
 public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -129,7 +132,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void startShopping(/*Registered user data*/) {
-        Intent intent = new Intent(this, ChargingStationListActivity.class);
+        Intent intent = new Intent(this, ChargerListActivity.class);
         //intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
 

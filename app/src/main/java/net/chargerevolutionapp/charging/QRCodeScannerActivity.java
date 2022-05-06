@@ -1,19 +1,12 @@
-package net.chargerevolutionapp;
-
-import android.annotation.SuppressLint;
+package net.chargerevolutionapp.charging;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowInsets;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -21,7 +14,7 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
-import net.chargerevolutionapp.databinding.ActivityQrcodeScannerBinding;
+import net.chargerevolutionapp.R;
 
 public class QRCodeScannerActivity extends AppCompatActivity {
 

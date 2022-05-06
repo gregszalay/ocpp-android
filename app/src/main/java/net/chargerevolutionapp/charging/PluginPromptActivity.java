@@ -1,4 +1,4 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.charging;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import net.chargerevolutionapp.HomeActivity;
+import net.chargerevolutionapp.R;
+import net.chargerevolutionapp.charging.ChargingActivity;
 
 public class PluginPromptActivity extends AppCompatActivity {
 

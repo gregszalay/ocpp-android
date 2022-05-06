@@ -1,6 +1,5 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.profiles;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,14 +13,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.auth.User;
+
+import net.chargerevolutionapp.EVs.EVModel;
+import net.chargerevolutionapp.HomeActivity;
+import net.chargerevolutionapp.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package net.chargerevolutionapp;
+package net.chargerevolutionapp.EVs;
 
 import androidx.annotation.NonNull;
 
