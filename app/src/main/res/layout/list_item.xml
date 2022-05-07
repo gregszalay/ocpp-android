@@ -6,54 +6,69 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/itemName"
             style="@style/ItemDetailText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="@string/ItemNamePlaceholder"
-            android:textColor="?android:textColorSecondary" />
-
-
-        <TextView
-            android:id="@+id/address"
-            style="@style/ItemDetailText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/itemName"
-            android:padding="8dp"
-            android:text="@string/addressPlaceholder" />
-
+            android:textAlignment="textStart"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/connectors"
             style="@style/ItemDetailText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/address"
-            android:padding="8dp"
-            android:text="@string/connectorsPlaceholder" />
+            android:layout_below="@id/itemName"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/connectorsPlaceholder"
+            android:textAlignment="textStart" />
 
+        <TextView
+            android:id="@+id/address"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/connectors"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/addressPlaceholder"
+            android:textAlignment="textStart" />
 
         <TextView
             android:id="@+id/maxPower"
             style="@style/ItemDetailText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/connectors"
-            android:padding="8dp"
-            android:text="@string/maxPowerPlaceholder" />
+            android:layout_below="@id/address"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="@string/maxPowerPlaceholder"
+            android:textAlignment="textStart" />
 
         <Button
             android:id="@+id/chargerDetailsBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="70dp"
             android:layout_below="@id/maxPower"
-            android:layout_centerHorizontal="true"
-            android:text="@string/chargerDetialsBtnText" />
+            android:layout_marginTop="13dp"
+            android:text="@string/chargerDetialsBtnText"
+
+            />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

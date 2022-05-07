@@ -1,85 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".chargers.ChargerDetailsActivity">
 
-    <TextView
-        android:id="@+id/detailsItemName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:text="ItemNamePlaceholder"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textColor="?android:textColorSecondary"/>
-
-
-    <ImageView
-        android:id="@+id/chargerImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/detailsItemName"
-        android:adjustViewBounds="true" />
-
-
-    <TextView
-        android:id="@+id/detailsAddress"
-        style="@style/ItemDetailText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/chargerImage"
-        android:padding="8dp"
-        android:text="addressPlaceholder"
-        android:textColor="?android:textColorSecondary"/>
-
-
-    <TextView
-        android:id="@+id/detailsConnectors"
-        style="@style/ItemDetailText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/detailsAddress"
-        android:padding="8dp"
-        android:text="connectorsPlaceholder"
-        android:textColor="?android:textColorSecondary"/>
-
-
-    <TextView
-        android:id="@+id/detailsMaxPower"
-        style="@style/ItemDetailText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/detailsConnectors"
-        android:padding="8dp"
-        android:text="maxPowerPlaceholder"
-        android:textColor="?android:textColorSecondary"
-        />
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/detailsMaxPower"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.071">
 
-        <Button
-            android:layout_width="400dp"
-            android:layout_height="50dp"
-            android:onClick="startCharging"
-            android:text="@string/startChargingBtnText" />
+        <TextView
+            android:id="@+id/detailsItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:text="ItemNamePlaceholder"
+            android:textAlignment="center"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.123"
+            tools:layout_editor_absoluteX="0dp" />
 
-        <Button
-            android:layout_width="400dp"
-            android:layout_height="50dp"
-            android:onClick="reserveNow"
-            android:text="@string/reserveNowBtnText" />
+        <ImageView
+            android:id="@+id/chargerImage"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:layout_below="@id/detailsItemName"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="-5dp" />
+
+
+        <TextView
+            android:id="@+id/detailsAddress"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chargerImage"
+            android:padding="8dp"
+            android:text="addressPlaceholder"
+            android:textAlignment="textStart"
+            android:textColor="?android:textColorSecondary"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="234dp" />
+
+
+        <TextView
+            android:id="@+id/detailsConnectors"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailsAddress"
+            android:padding="8dp"
+            android:text="connectorsPlaceholder"
+            android:textAlignment="textStart"
+            android:textColor="?android:textColorSecondary"
+            tools:layout_editor_absoluteX="72dp"
+            tools:layout_editor_absoluteY="215dp" />
+
+
+        <TextView
+            android:id="@+id/detailsMaxPower"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailsConnectors"
+            android:padding="8dp"
+            android:text="maxPowerPlaceholder"
+            android:textAlignment="textStart"
+            android:textColor="?android:textColorSecondary"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="199dp" />
+
     </LinearLayout>
-</RelativeLayout>
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:onClick="startCharging"
+        android:text="@string/startChargingBtnText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.85"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:onClick="reserveNow"
+        android:text="@string/reserveNowBtnText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

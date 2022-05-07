@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,51 +7,65 @@
     tools:context=".charging.PluginPromptActivity">
 
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/chargerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:text="chargerNamePlaceholder"
+        android:textAlignment="center"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055" />
 
-        <TextView
-            android:id="@+id/chargerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="chargerNamePlaceholder"
-            android:textAlignment="center"
-            android:textColor="?android:textColorSecondary"
-            android:textSize="24sp" />
+    <TextView
+        android:id="@+id/cablePlugPromptText"
+        style="@style/ItemDetailText"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="8dp"
+        android:text="Kérem csatlakoztassa a kábelt!"
+        android:textAlignment="center"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:onClick="cablePluggedInOK"
+        android:text="OK"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.863" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:onClick="cancelChargingSession"
+        android:text="Mégsem"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.0" />
 
 
-        <TextView
-            android:id="@+id/cablePlugPromptText"
-            style="@style/ItemDetailText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
-            android:padding="8dp"
-            android:text="Kérem csatlakoztassa a kábelt!"
-            android:textColor="?android:textColorSecondary" />
-
-
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:onClick="cablePluggedInOK"
-            android:text="OK" />
-
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:onClick="cancelChargingSession"
-            android:text="Mégsem" />
-    </LinearLayout>
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

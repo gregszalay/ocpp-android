@@ -17,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chargerevolutionapp">
         <activity
-            android:name=".ui.login.LoginActivityom"
-            android:exported="false"
-            android:label="@string/title_activity_login_activityom" />
-        <activity
             android:name=".profiles.ProfileSettingsActivity"
             android:exported="false" />
         <activity
@@ -30,7 +26,6 @@
             android:name=".charging.QRCodeScannerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
-            android:label="@string/title_activity_qrcode_scanner"
             android:theme="@style/Theme.Chargerevolutionapp.Fullscreen" />
         <activity
             android:name=".HomeActivity"
@@ -64,8 +59,7 @@
         -->
         <activity
             android:name=".chargers.ChargerListActivity"
-            android:exported="false"
-            android:label="ChargingStationListActivity" />
+            android:exported="false" />
         <activity
             android:name=".registration.RegistrationActivity"
             android:exported="false" />

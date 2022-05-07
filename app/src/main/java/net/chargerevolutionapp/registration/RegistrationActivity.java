@@ -35,8 +35,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     EditText userEmailEditText;
     EditText passwordEditText;
     EditText passwordAgainEditText;
-    EditText phoneEditText;
-    Spinner spinner;
     EditText connectorType;
     Spinner evModelSpinner;
     private SharedPreferences preferences;
@@ -64,9 +62,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         userEmailEditText = findViewById(R.id.userEmailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         passwordAgainEditText = findViewById(R.id.passwordAgainEditText);
-        phoneEditText = findViewById(R.id.phoneEditText);
-        spinner = findViewById(R.id.phoneSpinner);
-
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
         String userName = preferences.getString("userName", "");
         String password = preferences.getString("password", "");

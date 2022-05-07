@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Chargerevolution App</string>
+    <string name="app_name"></string>
     <string name="name">Név</string>
     <string name="password">Jelszó</string>
     <string name="registration">Regisztráció</string>
@@ -50,6 +50,7 @@
     <string name="title_activity_qrcode_scanner">QRCodeScannerActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="profileSettings">EV profilom beállítása</string>
+    <string name="profileSettings">EV profil módosítása</string>
     <string name="title_activity_login_activityom">LoginActivityom</string>
+    <string name="LogoutBtnText">Kijelentkezés</string>
 </resources>

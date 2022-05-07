@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_constraintEnd_toEndOf="parent"
     tools:context=".charging.ChargingActivity">
 
+    <TextView
+        android:id="@+id/sessionChargerName"
+        style="@style/ItemDetailText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="chargerNamePlaceholder"
+        android:textAlignment="center"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.09"
+        tools:layout_editor_absoluteX="0dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/chargingSessionTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
             android:text="@string/sessionInProgressTitle"
             android:textAlignment="center"
             android:textColor="?android:textColorSecondary"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/sessionChargerName"
-            style="@style/ItemDetailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="chargerNamePlaceholder"
-            android:textColor="?android:textColorSecondary" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/chargingPower"
@@ -42,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="chargingPowerPlaceholder"
+            android:text="Töltési teljesítmény: 45 kW"
+            android:textAlignment="center"
             android:textColor="?android:textColorSecondary" />
 
         <TextView
@@ -51,19 +58,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="approxTimeToFullPlaceholder"
+            android:text="Várható töltési idő: 1 óra 16 perc"
+            android:textAlignment="center"
             android:textColor="?android:textColorSecondary" />
 
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:layout_below="@id/approxTimeToFull"
-            android:onClick="endChargingSession"
-            android:text="Töltés befejezése" />
     </LinearLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:onClick="endChargingSession"
+        android:text="Töltés befejezése"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96"
+        tools:layout_editor_absoluteX="4dp" />
 
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
