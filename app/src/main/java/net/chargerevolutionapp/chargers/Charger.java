@@ -1,7 +1,10 @@
 package net.chargerevolutionapp.chargers;
 
-public class Charger {
+import net.chargerevolutionapp.FirestoreModel;
 
+public class Charger implements FirestoreModel {
+
+    private String ID;
     private String address;
     private long chargingStartTime;
     private long chargingStopTime;
@@ -29,7 +32,8 @@ public class Charger {
         this.maxPowerInkW = maxPowerInkW;
     }
 
-    public Charger() {}
+    public Charger() {
+    }
 
     public int getMaxPowerInkW() {
         return maxPowerInkW;
@@ -75,5 +79,13 @@ public class Charger {
         return reservedUntil;
     }
 
+
+    public String _getDocID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
 }

@@ -17,17 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.chargerevolutionapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChargerAdapter
         extends RecyclerView.Adapter<ChargerAdapter.ViewHolder>
         implements Filterable {
     // Member variables.
-    private ArrayList<Charger> mChargerData;
-    private ArrayList<Charger> mChargerDataAll;
+    private List<Charger> mChargerData;
+    private List<Charger> mChargerDataAll;
     private Context mContext;
     private int lastPosition = -1;
 
-    ChargerAdapter(Context context, ArrayList<Charger> itemsData) {
+    ChargerAdapter(Context context, List<Charger> itemsData) {
         this.mChargerData = itemsData;
         this.mChargerDataAll = itemsData;
         this.mContext = context;
@@ -76,7 +77,7 @@ public class ChargerAdapter
     private Filter shoppingFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            ArrayList<Charger> filteredList = new ArrayList<>();
+            List<Charger> filteredList = new ArrayList<>();
             FilterResults results = new FilterResults();
 
             if (charSequence == null || charSequence.length() == 0) {

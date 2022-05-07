@@ -10,23 +10,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import net.chargerevolutionapp.AbstractRepository;
+import net.chargerevolutionapp.profiles.UserProfile;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ChargerRepository extends AbstractRepository {
 
     private static final String LOG_TAG = ChargerRepository.class.getName();
     private final MutableLiveData<List<Charger>> chargerListMutableLiveData;
-    private final MutableLiveData<Charger> chargerMutableLiveData;
     private final CollectionReference chargingStationsCollectionRef;
-    private final FirebaseFirestore mFirestore;
 
     public ChargerRepository() {
         this.chargerListMutableLiveData = new MutableLiveData<>();
-        this.mFirestore = FirebaseFirestore.getInstance();
-        this.chargingStationsCollectionRef = mFirestore.collection("chargingStations");
-        chargerMutableLiveData = new MutableLiveData<>();
+        this.chargingStationsCollectionRef = super.mFirestore.collection("chargingStations");
     }
 
     //CREATE
@@ -35,14 +34,18 @@ public class ChargerRepository extends AbstractRepository {
     }
 
     //READ
-    public MutableLiveData<List<Charger>> getChargerListMutableLiveData() {
+    public MutableLiveData<List<Charger>> getChargerListMutableLiveData(UserProfile profile) {
         Log.i(LOG_TAG, "getChargerListMutableLiveData() ");
-        mFirestore.collection("chargingStations").addSnapshotListener((value, error) -> {
+        this.chargingStationsCollectionRef.addSnapshotListener((value, error) -> {
             List<Charger> chargerList = new ArrayList<>();
             assert value != null;
             for (QueryDocumentSnapshot doc : value) {
                 if (doc != null) {
-                    chargerList.add(doc.toObject(Charger.class));
+                    Charger chargerItem = doc.toObject(Charger.class);
+                    if (chargerItem.getConnectorTypes().contains(profile.getCarConnector())) {
+                        chargerItem.setID(doc.getId());
+                        chargerList.add(chargerItem);
+                    }
                 }
             }
             chargerListMutableLiveData.postValue(chargerList);

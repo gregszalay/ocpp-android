@@ -32,20 +32,14 @@ import net.chargerevolutionapp.HomeActivity;
 import net.chargerevolutionapp.R;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String LOG_TAG = LoginActivity.class.getName();
-    private static final String PREF_KEY = LoginActivity.class.getPackage().toString();
-    private static final int SECRET_KEY = 99;
-    private static final int RC_SIGN_IN = 123;
 
+    private static final String LOG_TAG = LoginActivity.class.getName();
     EditText usernameET;
     EditText passwordET;
-
+    ActivityResultLauncher<Intent> someActivityResultLauncher;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
-    ActivityResultLauncher<Intent> someActivityResultLauncher;
-
-    // private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,45 +58,25 @@ public class LoginActivity extends AppCompatActivity {
 
         this.someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            // There are no request codes
-                            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-                            try {
-                                // Google Sign In was successful, authenticate with Firebase
-                                GoogleSignInAccount account = task.getResult(ApiException.class);
-                                Log.d(LOG_TAG, "firebaseAuthWithGoogle:" + account.getId());
-                                firebaseAuthWithGoogle(account.getIdToken());
-                            } catch (ApiException e) {
-                                // Google Sign In failed, update UI appropriately
-                                Log.w(LOG_TAG, "Google sign in failed", e);
-                            }
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                        try {
+                            // Google Sign In was successful, authenticate with Firebase
+                            GoogleSignInAccount account = task.getResult(ApiException.class);
+                            Log.d(LOG_TAG, "firebaseAuthWithGoogle:" + account.getId());
+                            firebaseAuthWithGoogle(account.getIdToken());
+                        } catch (ApiException e) {
+                            // Google Sign In failed, update UI appropriately
+                            Log.w(LOG_TAG, "Google sign in failed", e);
                         }
                     }
                 });
 
     }
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(LOG_TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(LOG_TAG, "Google sign in failed", e);
-            }
-        }
-    }*/
+
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -112,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(LOG_TAG, "signInWithCredential:success");
-                            goShopping();
+                            goToHomeScreen();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(LOG_TAG, "signInWithCredential:failure", task.getException());
@@ -130,48 +104,33 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(userNameStr, passwordStr).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Log.d(LOG_TAG, "Login done!");
-                    goShopping();
+                    goToHomeScreen();
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-       Log.i(LOG_TAG, "Bejelentkezett: " + userNameStr + ", jelszó " + passwordStr);
+        Log.i(LOG_TAG, "Bejelentkezett: " + userNameStr + ", jelszó " + passwordStr);
 
     }
 
     public void loginWithGoogle(View view) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         this.someActivityResultLauncher.launch(signInIntent);
-        //startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-
-
-    private void goShopping(){
-
+    private void goToHomeScreen() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-        /*
-        Intent intent = new Intent(this, ChargerMapActivity.class);
-        startActivity(intent);
-    */
     }
-
-
 
     public void register(View view) {
         Intent intent = new Intent(this, RegistrationActivity.class);
-        intent.putExtra("SECRET_KEY", SECRET_KEY);
-        //TODO
         startActivity(intent);
-
     }
-
-
 
     @Override
     protected void onStart() {
@@ -194,11 +153,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-     //   SharedPreferences.Editor editor = preferences.edit();
-      /*  editor.putString("userName", this.usernameET.getText().toString());
-        editor.putString("password", this.passwordET.getText().toString());
-        editor.apply();
-*/
         Log.i(LOG_TAG, "onPause()");
     }
 

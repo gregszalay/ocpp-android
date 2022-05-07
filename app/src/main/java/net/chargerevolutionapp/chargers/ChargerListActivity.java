@@ -1,298 +1,107 @@
 package net.chargerevolutionapp.chargers;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
 import net.chargerevolutionapp.R;
 import net.chargerevolutionapp.profiles.UserProfile;
+import net.chargerevolutionapp.profiles.UserProfileRepository;
 
 public class ChargerListActivity extends AppCompatActivity {
     private static final String LOG_TAG = ChargerListActivity.class.getName();
-    private FirebaseUser user;
-
-    private FrameLayout redCircle;
-    private TextView countTextView;
-    private int cartItems = 0;
-    private int gridNumber = 1;
-    private Integer itemLimit = 5;
-
-    // Member variables.
-    private RecyclerView mRecyclerView;
-    private ArrayList<Charger> mItemsData;
-    private ChargerAdapter mAdapter;
-    private ArrayList<UserProfile> mProfileItemsData = new ArrayList<>();
-
-    private CollectionReference profilesCollectionRef;
-
-
-    private FirebaseFirestore mFirestore;
-    private CollectionReference mItems;
-
-    private SharedPreferences preferences;
-
-    private boolean viewRow = true;
+    private final int gridNumber = 1;
+    // ProgressDialog progressDialog;
+    private RecyclerView chargerRecyclerView;
+    private ChargerAdapter chargerAdapter;
+    private ChargerListViewModel chargerListViewModel;
+    private UserProfileRepository userProfileRepository;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charging_station_list);
+        this.userProfileRepository = new UserProfileRepository();
+        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                //this.userProfileRepository.getLoggedInFirebaseUser();
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            Log.d(LOG_TAG, "Authenticated user!");
+        //ProgressDialog
+//        this.progressDialog = new ProgressDialog(this);
+//        this.progressDialog.setTitle("Loading ...");
+//        this.progressDialog.show();
+
+        //Layout
+        this.chargerRecyclerView = findViewById(R.id.recyclerView);
+        this.chargerRecyclerView.setLayoutManager(new GridLayoutManager(this, this.gridNumber));
+
+        if (this.currentUser != null && this.currentUser.getEmail() != null) {
+            this.userProfileRepository.getUserProfileMutableLiveData(this.currentUser.getEmail())
+                    .observe(this, userProfile -> setUpChargerListObserver(userProfile));
         } else {
-            Log.d(LOG_TAG, "Unauthenticated user!");
-            finish();
+            Log.i(LOG_TAG, "Setting up charger list for example user!");
+            setUpChargerListObserver(new UserProfile(
+                    "Type2",
+                    "ExampleEV",
+                    "example@example.com"
+            ));
         }
-
-        // preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
-        // if(preferences != null) {
-        //     cartItems = preferences.getInt("cartItems", 0);
-        //     gridNumber = preferences.getInt("gridNum", 1);
-        // }
-
-        // recycle view
-        mRecyclerView = findViewById(R.id.recyclerView);
-        // Set the Layout Manager.
-        mRecyclerView.setLayoutManager(new GridLayoutManager(
-                this, gridNumber));
-        // Initialize the ArrayList that will contain the data.
-        mItemsData = new ArrayList<>();
-        // Initialize the adapter and set it to the RecyclerView.
-        mAdapter = new ChargerAdapter(this, mItemsData);
-        mRecyclerView.setAdapter(mAdapter);
-
-        mFirestore = FirebaseFirestore.getInstance();
-
-        mItems = mFirestore.collection("chargingStations");
-        this.profilesCollectionRef = mFirestore.collection("userProfiles");
-
-        mItemsData.clear();
-
-
-        if (this.user != null && this.user.getEmail() != null) {
-            this.profilesCollectionRef.whereEqualTo("userEmail", this.user.getEmail()).limit(1)
-                    .get().addOnSuccessListener(queryDocumentSnapshots -> {
-
-
-
-                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                    UserProfile profile = document.toObject(UserProfile.class);
-                    this.mProfileItemsData.add(profile);
-                }
-
-                mItems.orderBy("name").limit(100).get().addOnSuccessListener(queryDocumentSnapshots2 -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots2) {
-                        Charger item = document.toObject(Charger.class);
-                        //Filter based on user EV profile
-                        if (item.getConnectorTypes().contains(this.mProfileItemsData.get(0).getCarConnector())) {
-                            mItemsData.add(item);
-                        }
-                    }
-
-                    if (mItemsData.size() == 0) {
-                        Toast.makeText(this, "A profilodnak megfelelő töltő nem elérhető!", Toast.LENGTH_LONG).show();
-                    } else {
-                        // Notify the adapter of the change.
-                    }
-                    mAdapter.notifyDataSetChanged();
-                });
-
-
-            });
-        }
-
-//
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(Intent.ACTION_POWER_CONNECTED);
-//        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-//        this.registerReceiver(powerReceiver, filter);
-
-        // Intent intent = new Intent("CUSTOM_MOBALKFEJL_BROADCAST");
-        // LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
-//
-//    BroadcastReceiver powerReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            String intentAction = intent.getAction();
-//
-//            if (intentAction == null)
-//                return;
-//
-//            switch (intentAction) {
-//                case Intent.ACTION_POWER_CONNECTED:
-//                    itemLimit = 10;
-//                    queryData();
-//                    break;
-//                case Intent.ACTION_POWER_DISCONNECTED:
-//                    itemLimit = 5;
-//                    queryData();
-//                    break;
-//            }
-//        }
-//    };
-
-    private void initializeData() {
-        // Get the resources from the XML file.
-
-       /*
-        String[] itemsList = getResources()
-                .getStringArray(R.array.shopping_item_names);
-        String[] itemsInfo = getResources()
-                .getStringArray(R.array.shopping_item_desc);
-        String[] itemsPrice = getResources()
-                .getStringArray(R.array.shopping_item_price);
-        TypedArray itemsImageResources =
-                getResources().obtainTypedArray(R.array.shopping_item_images);
-        TypedArray itemRate = getResources().obtainTypedArray(R.array.shopping_item_rates);
-
-        // Create the ArrayList of Sports objects with the titles and
-        // information about each sport.
-        for (int i = 0; i < itemsList.length; i++) {
-            mItems.add(new ChargingStation(
-                    itemsList[i],
-                    itemsInfo[i],
-                    itemsPrice[i],
-                    itemRate.getFloat(i, 0),
-                    itemsImageResources.getResourceId(i, 0)));
-        }
-
-        // Recycle the typed array.
-        itemsImageResources.recycle();
-        */
 
     }
 
-    private void queryData() {
-
+    private void setUpChargerListObserver(UserProfile userProfile) {
+        this.chargerListViewModel = new ChargerListViewModel(this.getApplication(), userProfile);
+        //Set up charger list
+        this.chargerListViewModel.getAllChargersLive().observe(this, chargerList -> {
+            // progressDialog.dismiss();
+            this.chargerAdapter = new ChargerAdapter(this, chargerList);
+            this.chargerRecyclerView.setAdapter(this.chargerAdapter);
+            this.chargerAdapter.notifyDataSetChanged();
+        });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.shop_list_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.search_bar);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                Log.d(LOG_TAG, s);
-                mAdapter.getFilter().filter(s);
-                return false;
-            }
-        });
-        return true;
-    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-////        switch (item.getItemId()) {
-////            case R.id.log_out_button:
-////                Log.d(LOG_TAG, "Logout clicked!");
-////                FirebaseAuth.getInstance().signOut();
-////                finish();
-////                return true;
-////            case R.id.settings_button:
-////                Log.d(LOG_TAG, "Setting clicked!");
-////                FirebaseAuth.getInstance().signOut();
-////                finish();
-////                return true;
-////            case R.id.cart:
-////                Log.d(LOG_TAG, "Cart clicked!");
-////                return true;
-////            case R.id.view_selector:
-////                if (viewRow) {
-////                    changeSpanCount(item, R.drawable.ic_view_grid, 1);
-////                } else {
-////                    changeSpanCount(item, R.drawable.ic_view_row, 2);
-////                }
-////                return true;
-////            default:
-////                return super.onOptionsItemSelected(item);
-////        }
-//        return null;
-//    }
-
-    private void changeSpanCount(MenuItem item, int drawableId, int spanCount) {
-//        viewRow = !viewRow;
-//        item.setIcon(drawableId);
-//        GridLayoutManager layoutManager = (GridLayoutManager) mRecyclerView.getLayoutManager();
-//        layoutManager.setSpanCount(spanCount);
+    protected void onDestroy() {
+        super.onDestroy();
+//        chargerListViewModel.removeUserFilter();
+//        //unregisterReceiver(powerReceiver);
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        final MenuItem alertMenuItem = menu.findItem(R.id.cart);
-        FrameLayout rootView = (FrameLayout) alertMenuItem.getActionView();
-
-        redCircle = (FrameLayout) rootView.findViewById(R.id.view_alert_red_circle);
-        countTextView = (TextView) rootView.findViewById(R.id.view_alert_count_textview);
-
-        rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onOptionsItemSelected(alertMenuItem);
-            }
-        });
-        return super.onPrepareOptionsMenu(menu);
+    protected void onPause() {
+        super.onPause();
+//        chargerListViewModel.removeUserFilter();
     }
 
-    public void updateAlertIcon() {
-        cartItems = (cartItems + 1);
-        if (0 < cartItems) {
-            countTextView.setText(String.valueOf(cartItems));
-        } else {
-            countTextView.setText("");
-        }
-
-        redCircle.setVisibility((cartItems > 0) ? VISIBLE : GONE);
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (this.currentUser != null && this.currentUser.getEmail() != null) {
+//            UserProfile profileOfCurrentUser =
+//                    this.userProfileRepository.getUserProfile(this.currentUser.getEmail());
+//            chargerListViewModel.addUserFilter(profileOfCurrentUser);
+//        } else finish();
     }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        unregisterReceiver(powerReceiver);
-//    }
 
-    // @Override
-    // protected void onPause() {
-    //     super.onPause();
+    private void filterChargersForCurrentUser() {
+        //Filter chargers for user
+//        if (this.currentUser != null && this.currentUser.getEmail() != null) {
+//            UserProfile profileOfCurrentUser =
+//                    this.userProfileRepository.getUserProfile(this.currentUser.getEmail());
+//            this.chargerListViewModel.addUserFilter(profileOfCurrentUser);
+//        } else finish();
+    }
 
-    //     SharedPreferences.Editor editor = preferences.edit();
-    //     editor.putInt("cartItems", cartItems);
-    //     editor.putInt("gridNum", gridNumber);
-    //     editor.apply();
-
-    //     Log.i(LOG_TAG, "onPause");
-    // }
 }

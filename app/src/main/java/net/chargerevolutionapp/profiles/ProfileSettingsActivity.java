@@ -20,11 +20,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import net.chargerevolutionapp.EVs.EVModel;
+import net.chargerevolutionapp.EVs.EVModelRepository;
 import net.chargerevolutionapp.HomeActivity;
 import net.chargerevolutionapp.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProfileSettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -33,65 +35,58 @@ public class ProfileSettingsActivity extends AppCompatActivity implements Adapte
     TextView profileSettingsTextView;
     EditText connectorType;
     Spinner evModelSpinner;
-    private ArrayList<EVModel> mEvModelItemsData = new ArrayList<>();
-    private ArrayList<UserProfile> mProfileItemsData = new ArrayList<>();
-    private FirebaseUser user;
-    private FirebaseFirestore mFirestore;
-    private CollectionReference evModelsCollectionRef;
-    private CollectionReference profilesCollectionRef;
     private EVModel currentSelectedEVModel;
     private int currentEVIndex = 0;
+    private EVModelRepository evModelRepository;
+    private UserProfileRepository userProfileRepository;
+    private FirebaseUser currentUser;
+    private UserProfile currentUserProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_settings);
 
-        //Set up layout
         this.profileSettingsTextView = findViewById(R.id.profileSettingsTextView);
         this.connectorType = findViewById(R.id.connectorType);
         this.evModelSpinner = findViewById(R.id.evModelSpinner);
 
-        // Query all evModels
-        this.mFirestore = FirebaseFirestore.getInstance();
-        this.evModelsCollectionRef = mFirestore.collection("evModels");
-        this.profilesCollectionRef = mFirestore.collection("userProfiles");
+        this.evModelRepository = new EVModelRepository();
+        this.userProfileRepository = new UserProfileRepository();
+        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //Get user info
-        this.user = FirebaseAuth.getInstance().getCurrentUser();
+//        this.currentUser = this.userProfileRepository.getLoggedInFirebaseUser();
 
-        // Get profile of current user
-        if (this.user != null && this.user.getEmail() != null) {
-            this.profilesCollectionRef.whereEqualTo("userEmail", this.user.getEmail()).limit(1)
-                    .get().addOnSuccessListener(queryDocumentSnapshots -> {
-                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                    UserProfile profile = document.toObject(UserProfile.class);
-                    this.mProfileItemsData.add(profile);
-                }
-                this.mEvModelItemsData.clear();
-                this.evModelsCollectionRef.orderBy("manufacturer").limit(100).get().addOnSuccessListener(queryDocumentSnapshots2 -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots2) {
-                        EVModel model = document.toObject(EVModel.class);
-                        this.mEvModelItemsData.add(model);
-                    }
-                    //Set up spinner
-                    evModelSpinner.setOnItemSelectedListener(this);
-                    ArrayAdapter<EVModel> evModelAdapter = new ArrayAdapter<>(this,
-                            android.R.layout.simple_spinner_item, mEvModelItemsData);
-                    evModelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    evModelSpinner.setAdapter(evModelAdapter);
-                    if (this.mProfileItemsData.size() > 0) {
-                        for (int i = 0; i < this.mEvModelItemsData.size(); i++) {
-                            if (this.mProfileItemsData.get(0).getCarModel().equals(this.mEvModelItemsData.get(i).toString())) {
-                                this.evModelSpinner.setSelection(i);
-                                this.currentEVIndex = i;
+        if (this.currentUser != null && this.currentUser.getEmail() != null) {
+            this.userProfileRepository.getUserProfileMutableLiveData(this.currentUser.getEmail())
+                    .observe(this, userProfile -> {
+                        this.currentUserProfile = userProfile;
+                        this.evModelRepository.getEVListMutableLiveData()
+                                .observe(this, evModelList -> setUpSpinner(evModelList, userProfile));
+                    });
+        } else finish();
 
-                            }
-                        }
-                    }
-                });
-            });
+    }
+
+    private void setUpSpinner(List<EVModel> evModelList, UserProfile userProfile) {
+        if (userProfile == null) {
+            Log.w(LOG_TAG, "User profile is null!");
+            return;
         }
+        evModelSpinner.setOnItemSelectedListener(this);
+        ArrayAdapter<EVModel> evModelAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, evModelList);
+        evModelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        evModelSpinner.setAdapter(evModelAdapter);
+        if (evModelList.size() > 0) {
+            for (int i = 0; i < evModelList.size(); i++) {
+                if (userProfile.getCarModel().equals(evModelList.get(i).toString())) {
+                    this.evModelSpinner.setSelection(i);
+                    Log.i(LOG_TAG, "Set selection: " + i);
+                    this.currentEVIndex = i;
+                }
+            }
+        } else Log.w(LOG_TAG, "EV model list is empty!");
 
     }
 
@@ -100,27 +95,19 @@ public class ProfileSettingsActivity extends AppCompatActivity implements Adapte
             Log.w(LOG_TAG, "Save failed, no ev model selected!");
             return;
         }
-
-        if (this.user == null || this.user.getEmail() == null) {
-            Log.w(LOG_TAG, "Save failed, no user info available!");
-            return;
+        if (this.currentUserProfile == null) {
+            this.userProfileRepository.insert(new UserProfile(
+                    this.currentSelectedEVModel.getConnector(),
+                    this.currentSelectedEVModel.toString(),
+                    this.currentUser.getEmail())
+            );
+        } else {
+            this.currentUserProfile.setCarModel(this.currentSelectedEVModel.toString());
+            this.currentUserProfile.setCarConnector(this.currentSelectedEVModel.getConnector());
+            this.userProfileRepository.update(this.currentUserProfile);
         }
-
-        Map<String, Object> newProfile = new HashMap<>();
-        newProfile.put("carConnector", this.currentSelectedEVModel.getConnector());
-        newProfile.put("carModel", this.currentSelectedEVModel.toString());
-        newProfile.put("userEmail", this.user.getEmail());
-
-        this.profilesCollectionRef
-                .document(this.user.getEmail())
-                .set(newProfile)
-                .addOnSuccessListener(aVoid -> {
-                    Log.d(LOG_TAG, "User EV profile saved!");
-                    Toast.makeText(this, "Profil mentve!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(this, HomeActivity.class);
-                    this.startActivity(intent);
-                })
-                .addOnFailureListener(e -> Log.w(LOG_TAG, "Error writing document", e));
+        Intent intent = new Intent(this, HomeActivity.class);
+        this.startActivity(intent);
 
     }
 
