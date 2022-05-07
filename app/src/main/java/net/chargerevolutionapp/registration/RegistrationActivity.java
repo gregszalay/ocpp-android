@@ -1,4 +1,4 @@
-package net.chargerevolutionapp.users;
+package net.chargerevolutionapp.registration;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +17,15 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import net.chargerevolutionapp.EVs.EVModel;
+import net.chargerevolutionapp.EVs.EVModelRepository;
+import net.chargerevolutionapp.HomeActivity;
 import net.chargerevolutionapp.R;
 import net.chargerevolutionapp.chargers.ChargerListActivity;
+import net.chargerevolutionapp.profiles.UserProfile;
+import net.chargerevolutionapp.profiles.UserProfileRepository;
+
+import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -30,8 +37,14 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     EditText passwordAgainEditText;
     EditText phoneEditText;
     Spinner spinner;
+    EditText connectorType;
+    Spinner evModelSpinner;
     private SharedPreferences preferences;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
+    private UserProfileRepository userProfileRepository;
+    private EVModel currentSelectedEVModel;
+    private int currentEVIndex = 0;
+    private EVModelRepository evModelRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +53,12 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         Log.i(LOG_TAG, "onCreate()");
 
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        this.userProfileRepository = new UserProfileRepository();
+        this.connectorType = findViewById(R.id.connectorType);
+        this.evModelSpinner = findViewById(R.id.evModelSpinner);
+
+        this.evModelRepository = new EVModelRepository();
 
         userNameEditText = findViewById(R.id.userNameEditText);
         userEmailEditText = findViewById(R.id.userEmailEditText);
@@ -57,12 +75,22 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         passwordEditText.setText(password);
         passwordAgainEditText.setText(password);
 
-        spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.phone_modes, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        this.evModelRepository.getEVListMutableLiveData()
+                .observe(this, evModelList -> setUpSpinner(evModelList));
 
+    }
+
+    private void setUpSpinner(List<EVModel> evModelList) {
+        evModelSpinner.setOnItemSelectedListener(this);
+        ArrayAdapter<EVModel> evModelAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, evModelList);
+        evModelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        evModelSpinner.setAdapter(evModelAdapter);
+        if (evModelList.size() > 0) {
+            this.evModelSpinner.setSelection(0);
+            Log.i(LOG_TAG, "Set selection: " + 0);
+            this.currentEVIndex = 0;
+        } else Log.w(LOG_TAG, "EV model list is empty!");
 
     }
 
@@ -79,9 +107,10 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         Log.i(LOG_TAG, "Regisztrált: " + userName + ", email: " + email);
         //TODO
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
                 Log.d(LOG_TAG, "User created successfully");
+                saveProfile(view);
                 openChargerList();
             } else {
                 Log.d(LOG_TAG, "User wasn't created successfully:", task.getException());
@@ -100,6 +129,18 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         startActivity(intent);
     }
 
+    private void saveProfile(View view) {
+        if (this.currentSelectedEVModel == null) {
+            Log.w(LOG_TAG, "Save failed, no ev model selected!");
+            return;
+        }
+        this.userProfileRepository.insert(new UserProfile(
+                this.currentSelectedEVModel.getConnector(),
+                this.currentSelectedEVModel.toString(),
+                this.userEmailEditText.getText().toString())
+        );
+
+    }
 
     @Override
     protected void onStart() {
@@ -140,14 +181,15 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         //TODO
-        String selectedItem = adapterView.getItemAtPosition(i).toString();
-        Log.i(LOG_TAG, selectedItem);
-
+        EVModel selectedItem = (EVModel) adapterView.getItemAtPosition(i);
+        String selectedItemString = selectedItem.toString();
+        Log.i(LOG_TAG, selectedItemString);
+        connectorType.setText(selectedItem.getConnector());
+        this.currentSelectedEVModel = selectedItem;
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        //TODO
-
+        this.evModelSpinner.setSelection(this.currentEVIndex);
     }
 }

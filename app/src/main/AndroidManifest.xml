@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chargerevolutionapp">
         <activity
+            android:name=".ui.login.LoginActivityom"
+            android:exported="false"
+            android:label="@string/title_activity_login_activityom" />
+        <activity
             android:name=".profiles.ProfileSettingsActivity"
             android:exported="false" />
         <activity
@@ -63,10 +67,10 @@
             android:exported="false"
             android:label="ChargingStationListActivity" />
         <activity
-            android:name=".users.RegistrationActivity"
+            android:name=".registration.RegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".users.LoginActivity"
+            android:name=".login.MyLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
