@@ -101,15 +101,12 @@ public class LoginActivity extends AppCompatActivity {
         String userNameStr = this.usernameET.getText().toString();
         String passwordStr = this.passwordET.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(userNameStr, passwordStr).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.d(LOG_TAG, "Login done!");
-                    goToHomeScreen();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
-                }
+        mAuth.signInWithEmailAndPassword(userNameStr, passwordStr).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                Log.d(LOG_TAG, "Login done!");
+                goToHomeScreen();
+            } else {
+                Toast.makeText(LoginActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
             }
         });
 

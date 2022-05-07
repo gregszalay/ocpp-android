@@ -35,16 +35,19 @@ public class UserProfileRepository extends AbstractRepository {
                 .whereEqualTo("userEmail", userEmail)
                 .limit(1)
                 .addSnapshotListener((value, error) -> {
-                    List<UserProfile> useProfileList = new ArrayList<>();
+                    List<UserProfile> userProfileList = new ArrayList<>();
                     assert value != null;
                     for (QueryDocumentSnapshot doc : value) {
                         if (doc != null) {
                             UserProfile userProfileItem = doc.toObject(UserProfile.class);
                             userProfileItem.setID(doc.getId());
-                            useProfileList.add(userProfileItem);
+                            userProfileList.add(userProfileItem);
                         }
                     }
-                    this.userProfileMutableLiveData.postValue(useProfileList.get(0));
+                    if(userProfileList.size()>0){
+
+                    this.userProfileMutableLiveData.postValue(userProfileList.get(0));
+                    }
                 });
         return this.userProfileMutableLiveData;
     }

@@ -61,6 +61,10 @@ public class ProfileSettingsActivity extends AppCompatActivity implements Adapte
             this.userProfileRepository.getUserProfileMutableLiveData(this.currentUser.getEmail())
                     .observe(this, userProfile -> {
                         this.currentUserProfile = userProfile;
+                        Log.i(LOG_TAG, "[onCreate observer] this.currentUser.getEmail() : " + this.currentUser.getEmail());
+                        Log.i(LOG_TAG, "[onCreate observer] userProfile.getID : " + userProfile._getDocID());
+                        Log.i(LOG_TAG, "[onCreate observer] userProfile.getemail : " + userProfile.getUserEmail());
+
                         this.evModelRepository.getEVListMutableLiveData()
                                 .observe(this, evModelList -> setUpSpinner(evModelList, userProfile));
                     });
@@ -95,6 +99,8 @@ public class ProfileSettingsActivity extends AppCompatActivity implements Adapte
             Log.w(LOG_TAG, "Save failed, no ev model selected!");
             return;
         }
+        Log.i(LOG_TAG, "[saveProfile] this.currentUser.getEmail() : " + this.currentUser.getEmail());
+
         if (this.currentUserProfile == null) {
             this.userProfileRepository.insert(new UserProfile(
                     this.currentSelectedEVModel.getConnector(),
