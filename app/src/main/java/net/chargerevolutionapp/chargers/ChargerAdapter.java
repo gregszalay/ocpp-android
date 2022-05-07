@@ -1,31 +1,41 @@
 package net.chargerevolutionapp.chargers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import net.chargerevolutionapp.R;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class ChargerAdapter
         extends RecyclerView.Adapter<ChargerAdapter.ViewHolder>
         implements Filterable {
     // Member variables.
-    private List<Charger> mChargerData;
-    private List<Charger> mChargerDataAll;
-    private Context mContext;
+    private final List<Charger> mChargerData;
+    private final List<Charger> mChargerDataAll;
+    private final Context mContext;
     private int lastPosition = -1;
 
     ChargerAdapter(Context context, List<Charger> itemsData) {
@@ -65,62 +75,19 @@ public class ChargerAdapter
         else return 0;
     }
 
-
-    /**
-     * RecycleView filter
-     **/
     @Override
     public Filter getFilter() {
-        return shoppingFilter;
+        return null;
     }
-
-    private Filter shoppingFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            List<Charger> filteredList = new ArrayList<>();
-            FilterResults results = new FilterResults();
-
-            if (charSequence == null || charSequence.length() == 0) {
-                if(mChargerDataAll != null){
-                    results.count = mChargerDataAll.size();
-                } else {
-                    results.count = 0;
-                }
-
-                results.values = mChargerDataAll;
-            } else {
-                String filterPattern = charSequence.toString().toLowerCase().trim();
-                for (Charger item : mChargerDataAll) {
-                    if (item.getName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-
-                if(filteredList != null){
-                    results.count = filteredList.size();
-                } else {
-                    results.count = 0;
-                }
-
-                results.values = filteredList;
-            }
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            mChargerData = (ArrayList) filterResults.values;
-            notifyDataSetChanged();
-        }
-    };
 
     class ViewHolder extends RecyclerView.ViewHolder {
         // Member Variables for the TextViews
-        private TextView mItemName;
-        private TextView mAddress;
-        private TextView mConnectors;
-        private TextView mMaxPower;
+        private final TextView mItemName;
+        private final TextView mAddress;
+        private final TextView mConnectors;
+        private final TextView mMaxPower;
+        private final Button chargerDetailsBtn;
+        private final TextView reservedNotice;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -130,6 +97,9 @@ public class ChargerAdapter
             mAddress = itemView.findViewById(R.id.address);
             mConnectors = itemView.findViewById(R.id.connectors);
             mMaxPower = itemView.findViewById(R.id.maxPower);
+            chargerDetailsBtn = itemView.findViewById(R.id.chargerDetailsBtn);
+            reservedNotice = itemView.findViewById(R.id.reservedNotice);
+            reservedNotice.setVisibility(View.GONE);
 
             itemView.findViewById(R.id.chargerDetailsBtn).setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, ChargerDetailsActivity.class);
@@ -148,13 +118,21 @@ public class ChargerAdapter
             mConnectors.setText(currentItem.getConnectorTypes());
             mMaxPower.setText(String.valueOf(currentItem.getMaxPowerInkW()));
 
+            if (currentItem.getReservedUntil() > System.currentTimeMillis()) {
+                reservedNotice.setVisibility(View.VISIBLE);
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat fmtOut = new SimpleDateFormat("HH:mm:ss");
+                String formattedDate = fmtOut.format(new Date(currentItem.getReservedUntil()));
+                reservedNotice.setText("Lefoglalva " + formattedDate + "-ig");
+                if (!Objects.equals(
+                        Objects.requireNonNull(
+                                FirebaseAuth.getInstance().getCurrentUser()).getEmail(),
+                        currentItem.getReservedByUserEmail()
+                )) {
+                    this.chargerDetailsBtn.setEnabled(false);
+                }
+            }
 
-
-            //mPriceText.setText(currentItem.getMaxPowerInkW());
-            //mRatingBar.setRating(currentItem.getRatedInfo());
-
-            // Load the images into the ImageView using the Glide library.
-            //Glide.with(mContext).load(currentItem.getImageResource()).into(mItemImage);
         }
     }
 }

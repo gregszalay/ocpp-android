@@ -10,6 +10,20 @@
         android:layout_marginBottom="5dp">
 
         <TextView
+            android:id="@+id/reservedNotice"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="Lefoglalva"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="16sp" />
+
+        <TextView
             android:id="@+id/itemName"
             style="@style/ItemDetailText"
             android:layout_width="match_parent"
@@ -18,6 +32,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="@string/ItemNamePlaceholder"
+            android:layout_below="@+id/reservedNotice"
             android:textAlignment="textStart"
             android:textColor="?android:textColorSecondary"
             android:textSize="24sp" />
@@ -66,8 +81,7 @@
             android:layout_height="70dp"
             android:layout_below="@id/maxPower"
             android:layout_marginTop="13dp"
-            android:text="@string/chargerDetialsBtnText"
-
+            android:text="@string/chargerDetailsBtnText"
             />
 
     </RelativeLayout>

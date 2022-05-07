@@ -13,12 +13,33 @@ public class Charger implements FirestoreModel {
     private boolean isCharging;
     private String name;
     private String postCode;
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
+
     private boolean reserved;
+
+    public void setReservedUntil(long reservedUntil) {
+        this.reservedUntil = reservedUntil;
+    }
+
     private long reservedUntil;
     private int maxPowerInkW;
 
+    public void setReservedByUserEmail(String reservedByUserEmail) {
+        this.reservedByUserEmail = reservedByUserEmail;
+    }
+
+    private String reservedByUserEmail;
+
+    public String getReservedByUserEmail() {
+        return reservedByUserEmail;
+    }
+
+
     public Charger(String address, long chargingStartTime, long chargingStopTime, String connectorTypes, String country, boolean isCharging, String name, String postCode,
-                   boolean reserved, long reservedUntil, int maxPowerInkW) {
+                   boolean reserved, long reservedUntil, int maxPowerInkW, String reservedByUserEmail) {
         this.address = address;
         this.chargingStartTime = chargingStartTime;
         this.chargingStopTime = chargingStopTime;
@@ -30,6 +51,7 @@ public class Charger implements FirestoreModel {
         this.reserved = reserved;
         this.reservedUntil = reservedUntil;
         this.maxPowerInkW = maxPowerInkW;
+        this.reservedByUserEmail = reservedByUserEmail;
     }
 
     public Charger() {

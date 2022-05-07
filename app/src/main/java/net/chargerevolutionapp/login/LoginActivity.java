@@ -31,9 +31,9 @@ import net.chargerevolutionapp.HomeActivity;
 import net.chargerevolutionapp.R;
 import net.chargerevolutionapp.registration.RegistrationActivity;
 
-public class MyLoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = MyLoginActivity.class.getName();
+    private static final String LOG_TAG = LoginActivity.class.getName();
     EditText userNameField;
     EditText passwordField;
     ImageView loginImageView;
@@ -75,7 +75,7 @@ public class MyLoginActivity extends AppCompatActivity {
                         Log.i(LOG_TAG, "Login successful!");
                         goToHomeScreen();
                     } else {
-                        Toast.makeText(MyLoginActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Invalid email or password!", Toast.LENGTH_LONG).show();
                     }
                 });
     }

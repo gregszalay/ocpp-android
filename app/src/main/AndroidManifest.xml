@@ -64,7 +64,7 @@
             android:name=".registration.RegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".login.MyLoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

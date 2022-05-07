@@ -21,10 +21,12 @@ public class ChargerRepository extends AbstractRepository {
 
     private static final String LOG_TAG = ChargerRepository.class.getName();
     private final MutableLiveData<List<Charger>> chargerListMutableLiveData;
+    private final MutableLiveData<Charger> chargerMutableLiveData;
     private final CollectionReference chargingStationsCollectionRef;
 
     public ChargerRepository() {
         this.chargerListMutableLiveData = new MutableLiveData<>();
+        chargerMutableLiveData = new MutableLiveData<>();
         this.chargingStationsCollectionRef = super.mFirestore.collection("chargingStations");
     }
 
@@ -51,6 +53,25 @@ public class ChargerRepository extends AbstractRepository {
             chargerListMutableLiveData.postValue(chargerList);
         });
         return chargerListMutableLiveData;
+    }
+
+    //READ
+    public MutableLiveData<Charger> getChargerMutableLiveData(String chargerName) {
+        Log.i(LOG_TAG, "getChargerListMutableLiveData() ");
+        this.chargingStationsCollectionRef.whereEqualTo("name", chargerName).limit(1)
+                .addSnapshotListener((value, error) -> {
+                    List<Charger> chargerList = new ArrayList<>();
+                    assert value != null;
+                    for (QueryDocumentSnapshot doc : value) {
+                        if (doc != null) {
+                            Charger chargerItem = doc.toObject(Charger.class);
+                                chargerItem.setID(doc.getId());
+                                chargerList.add(chargerItem);
+                        }
+                    }
+                    chargerMutableLiveData.postValue(chargerList.get(0));
+                });
+        return chargerMutableLiveData;
     }
 
     //UPDATE

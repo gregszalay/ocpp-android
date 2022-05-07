@@ -86,7 +86,25 @@
             tools:layout_editor_absoluteX="26dp"
             tools:layout_editor_absoluteY="199dp" />
 
+        <TextView
+            android:id="@+id/reservationUntil"
+            android:layout_marginTop="25dp"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailsMaxPower"
+            android:padding="8dp"
+            android:text="reserveTimePlaceholder"
+            android:visibility="gone"
+            android:textAlignment="textStart"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="18dp"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="199dp" />
+
+
     </LinearLayout>
+
 
     <Button
         android:id="@+id/button5"
@@ -100,10 +118,23 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
+        android:id="@+id/reserveBtn"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:onClick="reserveNow"
         android:text="@string/reserveNowBtnText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/cancelReserveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:onClick="cancelReservation"
+        android:text="Foglalás törlése"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button5"
         app:layout_constraintVertical_bias="0.0"
