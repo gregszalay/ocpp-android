@@ -42,7 +42,9 @@ public class ChargerFormActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Log.i(LOG_TAG, "valami");
 
-        if (!bundle.getString("ChargerName").equals("")) {
+        this.updatedChargerName = bundle.getString("ChargerName");
+
+        if (!this.updatedChargerName.equals("")) {
             this.chargerRepository.getChargerMutableLiveData(this.updatedChargerName).observe(
                     this, charger -> {
                         this.updatedCharger = charger;

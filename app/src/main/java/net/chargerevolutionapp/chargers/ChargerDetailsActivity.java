@@ -47,6 +47,8 @@ public class ChargerDetailsActivity extends AppCompatActivity {
     private AlarmManager alarmManager;
     private PendingIntent reservationAlarmIntent;
 
+    private String chargerName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,7 @@ public class ChargerDetailsActivity extends AppCompatActivity {
         deleteBtn = findViewById(R.id.deleteBtn);
 
         Bundle bundle = getIntent().getExtras();
-        String chargerName = bundle.getString("ChargerName");
+        this.chargerName = bundle.getString("ChargerName");
         detailsItemName.setText(chargerName);
 
         chargerRepository = new ChargerRepository();
@@ -86,7 +88,7 @@ public class ChargerDetailsActivity extends AppCompatActivity {
                         }
                 );
 
-        this.chargerRepository.getChargerMutableLiveData(chargerName)
+        this.chargerRepository.getChargerMutableLiveData(this.chargerName)
                 .observe(this, charger -> {
                     this.charger = charger;
                     detailsAddress.setText(charger.getAddress());
@@ -141,6 +143,9 @@ public class ChargerDetailsActivity extends AppCompatActivity {
         intent.putExtra("ChargerName", this.charger.getName());
         startActivity(intent);
         if (this.reservationAlarmIntent != null) alarmManager.cancel(this.reservationAlarmIntent);
+        this.charger.setCharging(true);
+        this.charger.setWhoIsChargingEmail(this.chargerRepository.getLoggedInFirebaseUser().getEmail());
+        this.chargerRepository.update(this.charger);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -190,12 +195,11 @@ public class ChargerDetailsActivity extends AppCompatActivity {
 
     public void updateCharger(View view) {
         Intent intent = new Intent(this, ChargerFormActivity.class);
-        intent.putExtra("ChargerName", this.charger.getName());
+        intent.putExtra("ChargerName", this.chargerName);
         startActivity(intent);
     }
 
     public void deleteCharger(View view) {
-
         if (this.reservationAlarmIntent != null) alarmManager.cancel(this.reservationAlarmIntent);
         notificationExecutor.cancel();
 

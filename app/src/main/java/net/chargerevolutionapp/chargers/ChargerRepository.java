@@ -65,11 +65,13 @@ public class ChargerRepository extends AbstractRepository {
                     for (QueryDocumentSnapshot doc : value) {
                         if (doc != null) {
                             Charger chargerItem = doc.toObject(Charger.class);
-                                chargerItem.setID(doc.getId());
-                                chargerList.add(chargerItem);
+                            chargerItem.setID(doc.getId());
+                            chargerList.add(chargerItem);
                         }
                     }
-                    chargerMutableLiveData.postValue(chargerList.get(0));
+                    if (chargerList.size() > 0) {
+                        chargerMutableLiveData.postValue(chargerList.get(0));
+                    }
                 });
         return chargerMutableLiveData;
     }

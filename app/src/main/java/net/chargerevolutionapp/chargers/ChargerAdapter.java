@@ -86,13 +86,13 @@ public class ChargerAdapter
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        // Member Variables for the TextViews
         private final TextView mItemName;
         private final TextView mAddress;
         private final TextView mConnectors;
         private final TextView mMaxPower;
         private final Button chargerDetailsBtn;
         private final TextView reservedNotice;
+        private final TextView chargingNotice;
         private final ChargerRepository chargerRepository;
         private final UserProfileRepository userProfileRepository;
 
@@ -109,6 +109,8 @@ public class ChargerAdapter
             chargerDetailsBtn = itemView.findViewById(R.id.chargerDetailsBtn);
             reservedNotice = itemView.findViewById(R.id.reservedNotice);
             reservedNotice.setVisibility(View.GONE);
+            chargingNotice = itemView.findViewById(R.id.chargingNotice);
+            chargingNotice.setVisibility(View.GONE);
 
             userProfileRepository = new UserProfileRepository();
 
@@ -120,6 +122,7 @@ public class ChargerAdapter
                 mContext.startActivity(intent);
             });
 
+
         }
 
         void bindTo(Charger currentItem) {
@@ -128,12 +131,21 @@ public class ChargerAdapter
             mConnectors.setText(currentItem.getConnectorTypes());
             mMaxPower.setText(String.valueOf(currentItem.getMaxPowerInkW()));
 
-            if (currentItem.getReservedUntil() > System.currentTimeMillis()) {
+            if(currentItem.isCharging()){
+                chargingNotice.setVisibility(View.VISIBLE);
+                if (!Objects.equals(
+                        Objects.requireNonNull(
+                                FirebaseAuth.getInstance().getCurrentUser()).getEmail(),
+                        currentItem.getWhoIsChargingEmail()
+                )) {
+                    this.chargerDetailsBtn.setEnabled(false);
+                }
+            } else if (currentItem.getReservedUntil() > System.currentTimeMillis()) {
                 reservedNotice.setVisibility(View.VISIBLE);
                 @SuppressLint("SimpleDateFormat")
                 SimpleDateFormat fmtOut = new SimpleDateFormat("HH:mm");
                 String formattedDate = fmtOut.format(new Date(currentItem.getReservedUntil()));
-                reservedNotice.setText("Lefoglalva " + formattedDate + "-ig");
+                reservedNotice.setText("************* Lefoglalva " + formattedDate + "-ig *************");
                 if (!Objects.equals(
                         Objects.requireNonNull(
                                 FirebaseAuth.getInstance().getCurrentUser()).getEmail(),

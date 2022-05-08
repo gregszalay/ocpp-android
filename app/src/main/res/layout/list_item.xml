@@ -17,10 +17,26 @@
             android:layout_marginTop="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:text="Lefoglalva"
+            android:text="********** Lefoglalva ********** "
             android:visibility="gone"
             android:textAlignment="center"
             android:textColor="?android:textColorSecondary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/chargingNotice"
+            style="@style/ItemDetailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text=">>>>>>>>>>>>>>> Épp tölt! >>>>>>>>>>>>>>>"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:layout_below="@+id/reservedNotice"
+            android:textColor="?android:textColorSecondary"
+
             android:textSize="16sp" />
 
         <TextView
@@ -32,7 +48,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="@string/ItemNamePlaceholder"
-            android:layout_below="@+id/reservedNotice"
+            android:layout_below="@+id/chargingNotice"
             android:textAlignment="textStart"
             android:textColor="?android:textColorSecondary"
             android:textSize="24sp" />
