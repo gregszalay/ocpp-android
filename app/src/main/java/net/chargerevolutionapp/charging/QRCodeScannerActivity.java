@@ -34,7 +34,6 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.i(LOG_TAG, "entered UI thread");
                         Toast.makeText(QRCodeScannerActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(QRCodeScannerActivity.this, PluginPromptActivity.class);
                         intent.putExtra("ChargerName", result.getText());
@@ -43,12 +42,7 @@ public class QRCodeScannerActivity extends AppCompatActivity {
                 });
             }
         });
-        scannerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCodeScanner.startPreview();
-            }
-        });
+        scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
     }
 
     @Override

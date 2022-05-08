@@ -40,8 +40,8 @@ public class NotificationExecutor {
         notificationManager.createNotificationChannel(channel);
     }
 
-    public void send(String message) {
-        Intent intent = new Intent(context, ChargerListActivity.class);
+    public void send(String message, Class<?> openOnClick) {
+        Intent intent = new Intent(context, openOnClick);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
                 NOTIFICATION_ID,

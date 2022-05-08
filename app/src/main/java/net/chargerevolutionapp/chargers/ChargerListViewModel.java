@@ -48,27 +48,5 @@ public class ChargerListViewModel extends AndroidViewModel {
         this.chargerRepository.delete(charger);
     }
 
-//
-//    //ADD FILTER
-//    public void addUserFilter(UserProfile profileInfo) {
-//        List<Charger> filteredListTemp = new ArrayList<>();
-//        if (chargerRepository.getChargerListMutableLiveData(profileInfo).getValue() == null) {
-//            Log.i(LOG_TAG, "Error filtering chargers: Charger list is null!");
-//        } else {
-//
-//            for (Charger charger :
-//                    Objects.requireNonNull(chargerRepository.getChargerListMutableLiveData().getValue())) {
-//                if (charger.getConnectorTypes().contains(profileInfo.getCarConnector())) {
-//                    filteredListTemp.add(charger);
-//                }
-//            }
-//            this.chargerListMutableLiveData.setValue(filteredListTemp);
-//        }
-//    }
-//
-//    //REMOVE FILTER
-//    public void removeUserFilter() {
-//        this.chargerListMutableLiveData = chargerRepository.getChargerListMutableLiveData();
-//    }
 
 }

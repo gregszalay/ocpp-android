@@ -52,7 +52,6 @@ public class ChargerAdapter
     @Override
     public ChargerAdapter.ViewHolder onCreateViewHolder(
             ViewGroup parent, int viewType) {
-
         return new ViewHolder(LayoutInflater.from(mContext)
                 .inflate(R.layout.list_item, parent, false));
 
@@ -60,13 +59,8 @@ public class ChargerAdapter
 
     @Override
     public void onBindViewHolder(ChargerAdapter.ViewHolder holder, int position) {
-        // Get current sport.
         Charger currentItem = mChargerData.get(position);
-
-        // Populate the textviews with data.
         holder.bindTo(currentItem);
-
-
         if (holder.getAdapterPosition() > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
             holder.itemView.startAnimation(animation);

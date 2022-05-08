@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import net.chargerevolutionapp.charging.ChargingActivity;
 import net.chargerevolutionapp.charging.PluginPromptActivity;
 import net.chargerevolutionapp.R;
 import net.chargerevolutionapp.notifications.ReservationAlarmReceiver;
@@ -41,11 +42,13 @@ public class ChargerDetailsActivity extends AppCompatActivity {
     private Button cancelReserveBtn;
     private Button updateButton;
     private Button deleteBtn;
+    private Button chargeNowBtn;
     private ChargerRepository chargerRepository;
     private UserProfileRepository userProfileRepository;
     private Charger charger;
     private AlarmManager alarmManager;
     private PendingIntent reservationAlarmIntent;
+
 
     private String chargerName;
 
@@ -65,6 +68,8 @@ public class ChargerDetailsActivity extends AppCompatActivity {
         cancelReserveBtn = findViewById(R.id.cancelReserveBtn);
         updateButton = findViewById(R.id.updateBtn);
         deleteBtn = findViewById(R.id.deleteBtn);
+        chargeNowBtn = findViewById(R.id.chargeNowBtn);
+
 
         Bundle bundle = getIntent().getExtras();
         this.chargerName = bundle.getString("ChargerName");
@@ -91,6 +96,9 @@ public class ChargerDetailsActivity extends AppCompatActivity {
         this.chargerRepository.getChargerMutableLiveData(this.chargerName)
                 .observe(this, charger -> {
                     this.charger = charger;
+                    if (charger.isCharging()) {
+                        chargeNowBtn.setText("Töltés állapota");
+                    } else chargeNowBtn.setText("Töltök most");
                     detailsAddress.setText(charger.getAddress());
                     detailsConnectors.setText(charger.getConnectorTypes());
                     detailsMaxPower.setText(String.valueOf(charger.getMaxPowerInkW()));
@@ -139,13 +147,20 @@ public class ChargerDetailsActivity extends AppCompatActivity {
 
 
     public void startCharging(View view) {
-        Intent intent = new Intent(this, PluginPromptActivity.class);
-        intent.putExtra("ChargerName", this.charger.getName());
-        startActivity(intent);
-        if (this.reservationAlarmIntent != null) alarmManager.cancel(this.reservationAlarmIntent);
-        this.charger.setCharging(true);
-        this.charger.setWhoIsChargingEmail(this.chargerRepository.getLoggedInFirebaseUser().getEmail());
-        this.chargerRepository.update(this.charger);
+        if (charger.isCharging()) {
+            Intent intent = new Intent(this, ChargingActivity.class);
+            intent.putExtra("ChargerName", this.charger.getName());
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, PluginPromptActivity.class);
+            intent.putExtra("ChargerName", this.charger.getName());
+            startActivity(intent);
+            if (this.reservationAlarmIntent != null)
+                alarmManager.cancel(this.reservationAlarmIntent);
+            this.charger.setCharging(true);
+            this.charger.setWhoIsChargingEmail(this.chargerRepository.getLoggedInFirebaseUser().getEmail());
+            this.chargerRepository.update(this.charger);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -171,7 +186,10 @@ public class ChargerDetailsActivity extends AppCompatActivity {
         String formattedDate = fmtOut.format(new Date(newEndOfReservationMillis));
         this.reservationUntil.setText("Lefoglalva " + formattedDate + "-ig");
 
-        notificationExecutor.send(this.charger.getName() + " lefoglalva " + formattedDate + "-ig");
+        notificationExecutor.send(
+                this.charger.getName() + " lefoglalva " + formattedDate + "-ig",
+                ChargerDetailsActivity.class
+        );
 
     }
 

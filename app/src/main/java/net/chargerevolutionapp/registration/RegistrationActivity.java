@@ -55,12 +55,11 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         firebaseAuth = FirebaseAuth.getInstance();
         this.userProfileRepository = new UserProfileRepository();
+        this.evModelRepository = new EVModelRepository();
+
         this.connectorType = findViewById(R.id.connectorType);
         this.evModelSpinner = findViewById(R.id.evModelSpinner);
         this.isAdminCheckBox = findViewById(R.id.isAdminCheckBox);
-
-        this.evModelRepository = new EVModelRepository();
-
         userNameEditText = findViewById(R.id.userNameEditText);
         userEmailEditText = findViewById(R.id.userEmailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -139,42 +138,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 this.userEmailEditText.getText().toString())
         );
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(LOG_TAG, "onStart()");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(LOG_TAG, "onStop()");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(LOG_TAG, "onDestroy()");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(LOG_TAG, "onPause()");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(LOG_TAG, "onResume()");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(LOG_TAG, "onRestart()");
     }
 
     @Override

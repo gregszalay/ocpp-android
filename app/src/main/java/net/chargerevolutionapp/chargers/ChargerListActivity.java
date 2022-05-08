@@ -21,8 +21,6 @@ import net.chargerevolutionapp.profiles.UserProfileRepository;
 
 public class ChargerListActivity extends AppCompatActivity {
     private static final String LOG_TAG = ChargerListActivity.class.getName();
-    private final int gridNumber = 1;
-    // ProgressDialog progressDialog;
     private RecyclerView chargerRecyclerView;
     private ChargerAdapter chargerAdapter;
     private ChargerListViewModel chargerListViewModel;
@@ -39,16 +37,9 @@ public class ChargerListActivity extends AppCompatActivity {
         this.userProfileRepository = new UserProfileRepository();
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
         this.newChargerButton = findViewById(R.id.newChargerButton);
-        //this.userProfileRepository.getLoggedInFirebaseUser();
-
-        //ProgressDialog
-//        this.progressDialog = new ProgressDialog(this);
-//        this.progressDialog.setTitle("Loading ...");
-//        this.progressDialog.show();
-
-        //Layout
         this.chargerRecyclerView = findViewById(R.id.recyclerView);
-        this.chargerRecyclerView.setLayoutManager(new GridLayoutManager(this, this.gridNumber));
+        int gridNumber = 1;
+        this.chargerRecyclerView.setLayoutManager(new GridLayoutManager(this, gridNumber));
 
         if (this.currentUser != null && this.currentUser.getEmail() != null) {
             this.userProfileRepository.getUserProfileMutableLiveData(this.currentUser.getEmail())
@@ -62,7 +53,6 @@ public class ChargerListActivity extends AppCompatActivity {
                     "example@example.com"
             ));
         }
-
         this.userProfileRepository.getUserProfileMutableLiveData(this.currentUser.getEmail())
                 .observe(
                         this, profile -> {
@@ -73,17 +63,12 @@ public class ChargerListActivity extends AppCompatActivity {
                         }
                 );
 
-
-
     }
-
-
 
     private void setUpChargerListObserver(UserProfile userProfile) {
         this.chargerListViewModel = new ChargerListViewModel(this.getApplication(), userProfile);
         //Set up charger list
         this.chargerListViewModel.getAllChargersLive().observe(this, chargerList -> {
-            // progressDialog.dismiss();
             this.chargerAdapter = new ChargerAdapter(this, chargerList);
             this.chargerRecyclerView.setAdapter(this.chargerAdapter);
             this.chargerAdapter.notifyDataSetChanged();
@@ -91,25 +76,6 @@ public class ChargerListActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
 
     public void newCharger(View view) {
         Intent intent = new Intent(this, ChargerFormActivity.class);
