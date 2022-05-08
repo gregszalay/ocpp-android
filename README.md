@@ -1,45 +1,45 @@
 # chargerevolutionapp
 
-##Útmutató
+## Útmutató
 
-###Regisztráció:
+### Regisztráció:
 1. Nyitó oldal -> "Regisztráció" gomb
 2. Töltsd ki az adatokat (az utolsó, connector type mező automatikusan kitöltődik)
 3. Az összes CRUD funkció teszteléséhez kell az Admin checkbox bepipálása
 4. "Regisztráció" gomb
 5. Home screen fog megjelenni
 
-###Emailes bejelentkezés:
+### Emailes bejelentkezés:
 1. Nyitó oldal 
 2. Email cím és jelszó kitöltése
 3. "Bejelentkezés" gomb
 4. Home screen fog megjelenni
 
-###Google Bejelentkezés:
+### Google Bejelentkezés:
 1. Nyitó oldal
 2. (email/jelszó kitöltése nem szükséges) 
 3. "Google Bejelentkezés" gomb 
 4. Home screen fog megjelenni
 
-###Töltők listázása
+### Töltők listázása
 1. Bejelentkezés -> Home oldal
 2. "Töltők listája" gomb
 3. Töltők görgethető listája fog megjelenni
 4. (FONTOS: a lista a regisztrációnál megadott EV connector típus alapján van szűrve!)
 
-###Felhasználó profiljának (EV típus) módosítása
+### Felhasználó profiljának (EV típus) módosítása
 1. Bejelentkezés -> Home oldal
 2. "Profil szerkesztése" gomb
 3. A spinnerből az EV típus kiválasztása (a connector type mező automatikusan kitöltődik)
 4. "Mentés" gomb
 
-###Egy töltő adatainak megnézése:
+### Egy töltő adatainak megnézése:
 1. Bejelentkezés -> Home oldal
 2. "Töltők listája" gomb
 3. Bármelyik töltőnél a "Megnézem" gomb
 4. A töltő adatai megjelennek
 
-###Egy töltés elindítása/leállítása:
+### Egy töltés elindítása/leállítása:
 1. Bejelentkezés -> Home oldal
 2. "Töltők listája" gomb
 3. Bármelyik töltőnél a "Megnézem" gomb
@@ -47,7 +47,7 @@
 5. "OK" gomb
 6. A végén "Töltés befejezése"
 
-###Egy töltés lefoglalása + notification + alarm:
+### Egy töltés lefoglalása + notification + alarm:
 1. Bejelentkezés -> Home oldal
 2. "Töltők listája" gomb
 3. Bármelyik töltőnél a "Megnézem" gomb
@@ -57,7 +57,7 @@
 7. Opcionális: "Foglalás törlése" gomb -> ilyenkor az értesítések eltűnnek
 
 
-###QRkód olvasás:
+### QRkód olvasás:
 1. Menj fel egy QR kód generáló oldalra (pl. https://www.the-qrcode-generator.com/).
 2. Ha szükséges, válaszd ki, hogy sima szövegből ("FREE TEXT") csinálja a kódot.
 3. Írd be az egyik, adatbázisban lévő töltő nevét (pl. Revolutioncharger1) és ebból generálj egy QR kódot.
@@ -65,14 +65,14 @@
 5. Az app a töltés megkezdése screenre fog vinni.
 
 
-###Új töltő rögzítése az adatbázisban (CRUD)
+### Új töltő rögzítése az adatbázisban (CRUD)
 1. Bejelentkezés -> Home oldal
 2. "Töltők listája" gomb
 3. Legfelül az "Új töltő rögzítése (Admin)" gomb
 4. Adatok kitöltése
 5. "Mentés" gomb
 
-###Egy töltő adatainak módosítása az adatbázisban  (CRUD)
+### Egy töltő adatainak módosítása az adatbázisban  (CRUD)
 1. Bejelentkezés -> Home oldal
 2. "Töltők listája" gomb
 3. Bármelyik töltőnél a "Megnézem" gomb
@@ -81,7 +81,7 @@
 6. "Mentés" gomb
 
 
-###Egy töltő törlése az adatbázisból  (CRUD)
+### Egy töltő törlése az adatbázisból  (CRUD)
 1. Bejelentkezés -> Home oldal
 2. "Töltők listája" gomb
 3. Bármelyik töltőnél a "Megnézem" gomb
