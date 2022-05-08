@@ -1,5 +1,7 @@
 # chargerevolutionapp
 
+*Ha segítség kell a futtatással, értelmezéssel kapcsolatban, keressetek a Coospacen!*
+
 ## Útmutató
 
 ### Regisztráció:
