@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.SkuDetails;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 
@@ -40,7 +42,6 @@ public class QRCodeScannerActivity extends AppCompatActivity {
             //QRCodeScannerActivity.this.startActivity(intent);
         }));
         scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
-
 
     }
 
