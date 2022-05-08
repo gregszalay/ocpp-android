@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -21,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import net.chargerevolutionapp.EVs.EVModel;
 import net.chargerevolutionapp.EVs.EVModelRepository;
+import net.chargerevolutionapp.HomeActivity;
 import net.chargerevolutionapp.R;
 import net.chargerevolutionapp.chargers.ChargerListActivity;
 import net.chargerevolutionapp.profiles.UserProfile;
@@ -109,7 +109,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             if (task.isSuccessful()) {
                 Log.d(LOG_TAG, "User created successfully");
                 saveProfile(view);
-                openChargerList();
+                goToHomeScreen();
             } else {
                 Log.d(LOG_TAG, "User wasn't created successfully:", task.getException());
                 Toast.makeText(RegistrationActivity.this, "User was't created successfully:", Toast.LENGTH_LONG).show();
@@ -122,8 +122,8 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         finish();
     }
 
-    private void openChargerList(/*Registered user data*/) {
-        Intent intent = new Intent(this, ChargerListActivity.class);
+    private void goToHomeScreen() {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
