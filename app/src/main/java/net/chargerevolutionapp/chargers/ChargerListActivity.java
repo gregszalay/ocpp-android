@@ -1,20 +1,17 @@
 package net.chargerevolutionapp.chargers;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.auth.User;
-
-import java.util.ArrayList;
 
 import net.chargerevolutionapp.R;
 import net.chargerevolutionapp.profiles.UserProfile;
@@ -29,6 +26,7 @@ public class ChargerListActivity extends AppCompatActivity {
     private ChargerListViewModel chargerListViewModel;
     private UserProfileRepository userProfileRepository;
     private FirebaseUser currentUser;
+    private Button newChargerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,8 @@ public class ChargerListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_charging_station_list);
         this.userProfileRepository = new UserProfileRepository();
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                //this.userProfileRepository.getLoggedInFirebaseUser();
+        this.newChargerButton = findViewById(R.id.newChargerButton);
+        //this.userProfileRepository.getLoggedInFirebaseUser();
 
         //ProgressDialog
 //        this.progressDialog = new ProgressDialog(this);
@@ -53,11 +52,22 @@ public class ChargerListActivity extends AppCompatActivity {
         } else {
             Log.i(LOG_TAG, "Setting up charger list for example user!");
             setUpChargerListObserver(new UserProfile(
+                    false,
                     "Type2",
                     "ExampleEV",
                     "example@example.com"
             ));
         }
+
+        this.userProfileRepository.getUserProfileMutableLiveData(this.currentUser.getEmail())
+                .observe(
+                        this, profile -> {
+                            if (profile != null && profile.getIsAdmin()) {
+                                Log.i(LOG_TAG, "setting update button visible...");
+                                newChargerButton.setVisibility(View.VISIBLE);
+                            }
+                        }
+                );
 
     }
 
@@ -104,4 +114,9 @@ public class ChargerListActivity extends AppCompatActivity {
 //        } else finish();
     }
 
+    public void newCharger(View view) {
+        Intent intent = new Intent(this, ChargerFormActivity.class);
+        intent.putExtra("ChargerName", "");
+        startActivity(intent);
+    }
 }

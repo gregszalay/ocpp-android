@@ -15,6 +15,15 @@
         android:layout_centerHorizontal="true"
         >
 
+        <Button
+            android:id="@+id/newChargerButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:hint="Új töltő rögzítése (Admin)"
+            android:visibility="gone"
+            android:onClick="newCharger" />
+
         <TextView
             android:id="@+id/listTitle"
             style="@style/ItemDetailText"

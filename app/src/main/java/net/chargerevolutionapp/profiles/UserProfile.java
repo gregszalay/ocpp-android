@@ -6,6 +6,8 @@ public class UserProfile implements FirestoreModel {
 
     private String ID;
 
+    private boolean isAdmin;
+
     public void setCarConnector(String carConnector) {
         this.carConnector = carConnector;
     }
@@ -22,7 +24,8 @@ public class UserProfile implements FirestoreModel {
     private String carModel;
     private String userEmail;
 
-    public UserProfile(String carConnector, String carModel, String userEmail) {
+    public UserProfile(boolean isAdmin, String carConnector, String carModel, String userEmail) {
+        this.isAdmin = isAdmin;
         this.carConnector = carConnector;
         this.carModel = carModel;
         this.userEmail = userEmail;
@@ -49,5 +52,9 @@ public class UserProfile implements FirestoreModel {
 
     public String getUserEmail() {
         return userEmail;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 }

@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import net.chargerevolutionapp.EVs.EVModel;
 import net.chargerevolutionapp.EVs.EVModelRepository;
-import net.chargerevolutionapp.HomeActivity;
 import net.chargerevolutionapp.R;
 import net.chargerevolutionapp.chargers.ChargerListActivity;
 import net.chargerevolutionapp.profiles.UserProfile;
@@ -37,6 +38,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     EditText passwordAgainEditText;
     EditText connectorType;
     Spinner evModelSpinner;
+    CheckBox isAdminCheckBox;
     private SharedPreferences preferences;
     private FirebaseAuth firebaseAuth;
     private UserProfileRepository userProfileRepository;
@@ -55,6 +57,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         this.userProfileRepository = new UserProfileRepository();
         this.connectorType = findViewById(R.id.connectorType);
         this.evModelSpinner = findViewById(R.id.evModelSpinner);
+        this.isAdminCheckBox = findViewById(R.id.isAdminCheckBox);
 
         this.evModelRepository = new EVModelRepository();
 
@@ -130,6 +133,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
             return;
         }
         this.userProfileRepository.insert(new UserProfile(
+                this.isAdminCheckBox.isChecked(),
                 this.currentSelectedEVModel.getConnector(),
                 this.currentSelectedEVModel.toString(),
                 this.userEmailEditText.getText().toString())

@@ -13,31 +13,10 @@ public class Charger implements FirestoreModel {
     private boolean isCharging;
     private String name;
     private String postCode;
-
-    public void setReserved(boolean reserved) {
-        this.reserved = reserved;
-    }
-
     private boolean reserved;
-
-    public void setReservedUntil(long reservedUntil) {
-        this.reservedUntil = reservedUntil;
-    }
-
     private long reservedUntil;
     private int maxPowerInkW;
-
-    public void setReservedByUserEmail(String reservedByUserEmail) {
-        this.reservedByUserEmail = reservedByUserEmail;
-    }
-
     private String reservedByUserEmail;
-
-    public String getReservedByUserEmail() {
-        return reservedByUserEmail;
-    }
-
-
     public Charger(String address, long chargingStartTime, long chargingStopTime, String connectorTypes, String country, boolean isCharging, String name, String postCode,
                    boolean reserved, long reservedUntil, int maxPowerInkW, String reservedByUserEmail) {
         this.address = address;
@@ -54,7 +33,73 @@ public class Charger implements FirestoreModel {
         this.reservedByUserEmail = reservedByUserEmail;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setChargingStartTime(long chargingStartTime) {
+        this.chargingStartTime = chargingStartTime;
+    }
+
+    public void setChargingStopTime(long chargingStopTime) {
+        this.chargingStopTime = chargingStopTime;
+    }
+
+    public void setConnectorTypes(String connectorTypes) {
+        this.connectorTypes = connectorTypes;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCharging(boolean charging) {
+        isCharging = charging;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public void setMaxPowerInkW(int maxPowerInkW) {
+        this.maxPowerInkW = maxPowerInkW;
+    }
+
+    public Charger(
+            String name,
+            String country,
+            String postCode,
+            String address,
+            String connectorTypes,
+            int maxPowerInkW
+    ) {
+        this.address = address;
+        this.chargingStartTime = 0;
+        this.chargingStopTime = 0;
+        this.connectorTypes = connectorTypes;
+        this.country = country;
+        this.isCharging = false;
+        this.name = name;
+        this.postCode = postCode;
+        this.reserved = false;
+        this.reservedUntil = 0;
+        this.maxPowerInkW = maxPowerInkW;
+        this.reservedByUserEmail = "";
+    }
+
     public Charger() {
+    }
+
+    public String getReservedByUserEmail() {
+        return reservedByUserEmail;
+    }
+
+    public void setReservedByUserEmail(String reservedByUserEmail) {
+        this.reservedByUserEmail = reservedByUserEmail;
     }
 
     public int getMaxPowerInkW() {
@@ -97,10 +142,17 @@ public class Charger implements FirestoreModel {
         return reserved;
     }
 
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
+
     public long getReservedUntil() {
         return reservedUntil;
     }
 
+    public void setReservedUntil(long reservedUntil) {
+        this.reservedUntil = reservedUntil;
+    }
 
     public String _getDocID() {
         return ID;

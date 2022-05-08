@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import net.chargerevolutionapp.R;
+import net.chargerevolutionapp.profiles.UserProfile;
+import net.chargerevolutionapp.profiles.UserProfileRepository;
 
 import org.w3c.dom.Text;
 
@@ -32,6 +34,9 @@ import java.util.Objects;
 public class ChargerAdapter
         extends RecyclerView.Adapter<ChargerAdapter.ViewHolder>
         implements Filterable {
+
+    private static final String LOG_TAG = ChargerAdapter.class.getName();
+
     // Member variables.
     private final List<Charger> mChargerData;
     private final List<Charger> mChargerDataAll;
@@ -88,9 +93,13 @@ public class ChargerAdapter
         private final TextView mMaxPower;
         private final Button chargerDetailsBtn;
         private final TextView reservedNotice;
+        private final ChargerRepository chargerRepository;
+        private final UserProfileRepository userProfileRepository;
 
         ViewHolder(View itemView) {
             super(itemView);
+
+            chargerRepository = new ChargerRepository();
 
             // Initialize the views.
             mItemName = itemView.findViewById(R.id.itemName);
@@ -101,15 +110,17 @@ public class ChargerAdapter
             reservedNotice = itemView.findViewById(R.id.reservedNotice);
             reservedNotice.setVisibility(View.GONE);
 
+            userProfileRepository = new UserProfileRepository();
+
             itemView.findViewById(R.id.chargerDetailsBtn).setOnClickListener(view -> {
                 Intent intent = new Intent(mContext, ChargerDetailsActivity.class);
                 Log.i("details", "ChargerName");
                 Log.i("details", mItemName.getText().toString());
                 intent.putExtra("ChargerName", mItemName.getText().toString());
-
                 mContext.startActivity(intent);
-                //((ChargingStationListActivity) mContext).updateAlertIcon();
             });
+
+
         }
 
         void bindTo(Charger currentItem) {

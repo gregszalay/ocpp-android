@@ -6,6 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".chargers.ChargerDetailsActivity">
 
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:onClick="updateCharger"
+        android:text="Töltő adatainak módosítása (Admin)"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:onClick="deleteCharger"
+        android:text="Töltő törlése az adatbázisból (Admin)"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -18,7 +43,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.071">
+        app:layout_constraintVertical_bias="0.452">
 
         <TextView
             android:id="@+id/detailsItemName"
@@ -38,7 +63,7 @@
         <ImageView
             android:id="@+id/chargerImage"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="227dp"
             android:layout_below="@id/detailsItemName"
             android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -88,23 +113,22 @@
 
         <TextView
             android:id="@+id/reservationUntil"
-            android:layout_marginTop="25dp"
             style="@style/ItemDetailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/detailsMaxPower"
+            android:layout_marginTop="25dp"
             android:padding="8dp"
             android:text="reserveTimePlaceholder"
-            android:visibility="gone"
             android:textAlignment="textStart"
             android:textColor="?android:textColorSecondary"
             android:textSize="18dp"
+            android:visibility="gone"
             tools:layout_editor_absoluteX="26dp"
             tools:layout_editor_absoluteY="199dp" />
 
 
     </LinearLayout>
-
 
     <Button
         android:id="@+id/button5"
@@ -128,6 +152,7 @@
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp" />
 
+
     <Button
         android:id="@+id/cancelReserveBtn"
         android:layout_width="match_parent"
@@ -139,6 +164,8 @@
         app:layout_constraintTop_toBottomOf="@+id/button5"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

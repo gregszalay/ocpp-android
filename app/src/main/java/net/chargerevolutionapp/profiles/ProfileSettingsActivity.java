@@ -11,23 +11,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import net.chargerevolutionapp.EVs.EVModel;
 import net.chargerevolutionapp.EVs.EVModelRepository;
 import net.chargerevolutionapp.HomeActivity;
 import net.chargerevolutionapp.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ProfileSettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -103,7 +96,7 @@ public class ProfileSettingsActivity extends AppCompatActivity implements Adapte
 
         if (this.currentUserProfile == null) {
             this.userProfileRepository.insert(new UserProfile(
-                    this.currentSelectedEVModel.getConnector(),
+                    false, this.currentSelectedEVModel.getConnector(),
                     this.currentSelectedEVModel.toString(),
                     this.currentUser.getEmail())
             );

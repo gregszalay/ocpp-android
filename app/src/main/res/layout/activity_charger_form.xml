@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registration.RegistrationActivity">
+    tools:context=".chargers.ChargerFormActivity">
+
 
     <TextView
-        android:id="@+id/registrationTextView"
+        android:id="@+id/chargerFormTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -16,15 +18,16 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="7dp"
         android:layout_marginRight="@dimen/default_margin"
-        android:text="@string/registration"
+        android:text="Töltő adatai"
         android:textAlignment="center"
         android:textSize="24sp" />
 
+
     <EditText
-        android:id="@+id/userNameEditText"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/registrationTextView"
+        android:layout_below="@+id/chargerFormTitle"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
@@ -33,109 +36,103 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
-        android:hint="@string/user_name"
-        android:inputType="textPersonName" />
+        android:hint="Töltő egyedi neve"
+        android:inputType="text" />
 
-    <CheckBox
-        android:id="@+id/isAdminCheckBox"
+
+    <EditText
+        android:id="@+id/country"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/userNameEditText"
+        android:layout_height="70dp"
+        android:layout_below="@+id/name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="4dp"
-        android:text="Admin" />
-
-    <EditText
-        android:id="@+id/userEmailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@+id/isAdminCheckBox"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
         android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
-        android:hint="@string/email_address"
-        android:inputType="textEmailAddress" />
+        android:hint="Ország"
+        android:inputType="text" />
+
 
     <EditText
-        android:id="@+id/passwordEditText"
+        android:id="@+id/postCode"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/userEmailEditText"
+        android:layout_below="@+id/country"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="5dp"
         android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:hint="Irányítószám"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/postCode"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="@dimen/default_margin"
+        android:ems="10"
+        android:hint="Cím"
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/passwordAgainEditText"
+        android:id="@+id/connectorTypes"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/passwordEditText"
+        android:layout_below="@+id/address"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
         android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
-        android:hint="@string/password_again"
-        android:inputType="textPassword" />
+        android:hint="Támogatott csatlakozó típusok"
+        android:inputType="text" />
 
-
-    <Spinner
-        android:id="@+id/evModelSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@+id/passwordAgainEditText"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginRight="@dimen/default_margin"
-        android:hint="EV modell" />
 
     <EditText
-        android:id="@+id/connectorType"
+        android:id="@+id/maxPowerInkW"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@id/evModelSpinner"
+        android:layout_below="@+id/connectorTypes"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="5dp"
         android:layout_marginLeft="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginRight="@dimen/default_margin"
         android:ems="10"
-        android:hint="Csatlakozó típusa"
+        android:hint="Legnagyobb teljesítmény (kW)"
         android:inputType="text" />
 
     <Button
-        android:id="@+id/registerButton"
+        android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@id/connectorType"
+        android:layout_below="@id/maxPowerInkW"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="14dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        android:hint="@string/registration"
-        android:onClick="register" />
+        android:hint="Mentés"
+        android:onClick="saveCharger" />
 
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_below="@id/registerButton"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="5dp"
-        android:hint="@string/cancel"
-        android:onClick="cancel" />
+
 
 </RelativeLayout>
