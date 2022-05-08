@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         emailInfoTextView = findViewById(R.id.emailInfo);
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        titleTextView.setText("Üdv " + this.currentUser.getDisplayName());
+        titleTextView.setText("Üdv " + this.currentUser.getDisplayName() + "!");
         emailInfoTextView.setText(this.currentUser.getEmail());
 
     }

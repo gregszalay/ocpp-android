@@ -9,6 +9,7 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,6 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Chargerevolutionapp">
+        <receiver
+            android:name=".notifications.ReservationAlarmReceiver"
+            android:enabled="true"
+            android:exported="false"></receiver>
         <activity
             android:name=".chargers.ChargerFormActivity"
             android:exported="false" />

@@ -120,7 +120,6 @@ public class ChargerAdapter
                 mContext.startActivity(intent);
             });
 
-
         }
 
         void bindTo(Charger currentItem) {
@@ -132,7 +131,7 @@ public class ChargerAdapter
             if (currentItem.getReservedUntil() > System.currentTimeMillis()) {
                 reservedNotice.setVisibility(View.VISIBLE);
                 @SuppressLint("SimpleDateFormat")
-                SimpleDateFormat fmtOut = new SimpleDateFormat("HH:mm:ss");
+                SimpleDateFormat fmtOut = new SimpleDateFormat("HH:mm");
                 String formattedDate = fmtOut.format(new Date(currentItem.getReservedUntil()));
                 reservedNotice.setText("Lefoglalva " + formattedDate + "-ig");
                 if (!Objects.equals(

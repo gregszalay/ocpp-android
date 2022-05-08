@@ -1,10 +1,12 @@
 package net.chargerevolutionapp.chargers;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,8 @@ public class ChargerListActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private Button newChargerButton;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +73,11 @@ public class ChargerListActivity extends AppCompatActivity {
                         }
                 );
 
+
+
     }
+
+
 
     private void setUpChargerListObserver(UserProfile userProfile) {
         this.chargerListViewModel = new ChargerListViewModel(this.getApplication(), userProfile);
@@ -80,39 +88,28 @@ public class ChargerListActivity extends AppCompatActivity {
             this.chargerRecyclerView.setAdapter(this.chargerAdapter);
             this.chargerAdapter.notifyDataSetChanged();
         });
+
+
     }
+
+
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        chargerListViewModel.removeUserFilter();
-//        //unregisterReceiver(powerReceiver);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        chargerListViewModel.removeUserFilter();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        if (this.currentUser != null && this.currentUser.getEmail() != null) {
-//            UserProfile profileOfCurrentUser =
-//                    this.userProfileRepository.getUserProfile(this.currentUser.getEmail());
-//            chargerListViewModel.addUserFilter(profileOfCurrentUser);
-//        } else finish();
     }
 
-    private void filterChargersForCurrentUser() {
-        //Filter chargers for user
-//        if (this.currentUser != null && this.currentUser.getEmail() != null) {
-//            UserProfile profileOfCurrentUser =
-//                    this.userProfileRepository.getUserProfile(this.currentUser.getEmail());
-//            this.chargerListViewModel.addUserFilter(profileOfCurrentUser);
-//        } else finish();
-    }
 
     public void newCharger(View view) {
         Intent intent = new Intent(this, ChargerFormActivity.class);
